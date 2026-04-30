@@ -3,7 +3,7 @@ import { useStore } from "@/store";
 import { streamChat } from "@/lib/ai";
 import ReactMarkdown from "react-markdown";
 import { Mic, MicOff, ArrowUp, RotateCcw, History, Star } from "lucide-react";
-import { RhinoLogo } from "@/components/RhinoLogo";
+import { RhinoCharacter, type MascotAnimation } from "@/components/RhinoCharacter";
 import { toast } from "sonner";
 
 const TYPES = [
@@ -160,11 +160,13 @@ export default function Interview() {
   if (setup) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center gap-3">
-          <Mic className="h-6 w-6 text-accent" />
+        <div className="flex items-center gap-4">
+          <RhinoCharacter size={84} animation="wave" />
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight">Тренажёр интервью</h1>
-            <p className="mt-1 text-sm text-text2">Прокачай ответы перед реальным интервью с приёмной комиссией</p>
+            <h1 className="text-3xl font-semibold tracking-tight">Интервью со Степом</h1>
+            <p className="mt-1 text-sm text-text2">
+              Степ возьмёт у тебя интервью как приёмная комиссия — отвечай голосом или текстом.
+            </p>
           </div>
         </div>
 
@@ -250,12 +252,32 @@ export default function Interview() {
     );
   }
 
+  // Mascot state reflects what's happening in the interview
+  const mascotState: MascotAnimation = streaming
+    ? "think"
+    : listening
+      ? "pulse"
+      : input.trim().length > 0
+        ? "nod"
+        : history.length === 0
+          ? "wave"
+          : "idle";
+
   return (
     <div className="flex h-[calc(100vh-7rem)] md:h-[calc(100vh-4rem)] flex-col">
       <div className="mb-4 flex items-center justify-between gap-3">
-        <div className="min-w-0">
-          <h1 className="truncate text-lg font-semibold tracking-tight">{university}</h1>
-          <p className="text-xs text-text3">{TYPES.find(t => t.v === type)?.l} · {LANGS.find(l => l.v === language)?.l}</p>
+        <div className="flex min-w-0 items-center gap-3">
+          <RhinoCharacter size={48} animation={mascotState} />
+          <div className="min-w-0">
+            <h1 className="truncate text-base font-semibold tracking-tight">
+              Степ · {university}
+            </h1>
+            <p className="text-xs text-text3">
+              {TYPES.find(t => t.v === type)?.l} · {LANGS.find(l => l.v === language)?.l}
+              {streaming && " · думает…"}
+              {!streaming && listening && " · слушает"}
+            </p>
+          </div>
         </div>
         <div className="flex gap-2">
           <button
@@ -275,31 +297,37 @@ export default function Interview() {
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto sw-scroll">
         <div className="mx-auto max-w-3xl space-y-6 pb-4">
-          {history.map((m, i) => (
-            <div key={i} className={`flex gap-3 ${m.role === "user" ? "justify-end" : ""}`}>
-              {m.role === "assistant" && (
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-bg3">
-                  <RhinoLogo size={20} />
+          {history.map((m, i) => {
+            const isLastAssistant = m.role === "assistant" && i === history.length - 1;
+            const avatarAnim: MascotAnimation = isLastAssistant
+              ? (streaming && !m.content ? "think" : "idle")
+              : "none";
+            return (
+              <div key={i} className={`flex gap-3 ${m.role === "user" ? "justify-end" : ""}`}>
+                {m.role === "assistant" && (
+                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-bg3 overflow-hidden">
+                    <RhinoCharacter size={34} animation={avatarAnim} />
+                  </div>
+                )}
+                <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
+                  m.role === "user" ? "bg-foreground text-background" : "bg-bg2 text-foreground"
+                }`}>
+                  {m.role === "user"
+                    ? <p className="whitespace-pre-wrap">{m.content}</p>
+                    : (
+                      m.content
+                        ? <div className="sw-prose"><ReactMarkdown>{m.content}</ReactMarkdown></div>
+                        : <span className="inline-flex gap-1">
+                            <span className="sw-dot h-1.5 w-1.5 rounded-full bg-text2" />
+                            <span className="sw-dot h-1.5 w-1.5 rounded-full bg-text2" />
+                            <span className="sw-dot h-1.5 w-1.5 rounded-full bg-text2" />
+                          </span>
+                    )
+                  }
                 </div>
-              )}
-              <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
-                m.role === "user" ? "bg-foreground text-background" : "bg-bg2 text-foreground"
-              }`}>
-                {m.role === "user"
-                  ? <p className="whitespace-pre-wrap">{m.content}</p>
-                  : (
-                    m.content
-                      ? <div className="sw-prose"><ReactMarkdown>{m.content}</ReactMarkdown></div>
-                      : <span className="inline-flex gap-1">
-                          <span className="sw-dot h-1.5 w-1.5 rounded-full bg-text2" />
-                          <span className="sw-dot h-1.5 w-1.5 rounded-full bg-text2" />
-                          <span className="sw-dot h-1.5 w-1.5 rounded-full bg-text2" />
-                        </span>
-                  )
-                }
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

@@ -210,3 +210,67 @@
 @media (prefers-reduced-motion: reduce) {
   .sw-mascot-bob, .sw-mascot-eyes { animation: none !important; }
 }
+
+/* ===== Mascot extra animations (variants) ===== */
+@keyframes sw-mascot-wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  70%           { transform: rotate(-12deg); }
+  80%           { transform: rotate(8deg); }
+  90%           { transform: rotate(-6deg); }
+}
+.sw-mascot-wave {
+  animation: sw-mascot-wave 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes sw-mascot-nod {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(4deg) translateY(1px); }
+}
+.sw-mascot-nod {
+  animation: sw-mascot-nod 1.4s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes sw-mascot-bounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  40%      { transform: translateY(-6px) scale(1.02, 0.98); }
+  60%      { transform: translateY(-6px) scale(1.02, 0.98); }
+  80%      { transform: translateY(0) scale(0.98, 1.02); }
+}
+.sw-mascot-bounce {
+  animation: sw-mascot-bounce 2s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes sw-mascot-tilt {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(3deg); }
+}
+.sw-mascot-tilt {
+  animation: sw-mascot-tilt 3.5s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes sw-mascot-pulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 hsl(var(--accent) / 0)); }
+  50%      { transform: scale(1.04); filter: drop-shadow(0 0 12px hsl(var(--accent) / 0.45)); }
+}
+.sw-mascot-pulse {
+  animation: sw-mascot-pulse 1.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes sw-mascot-think {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50%      { transform: rotate(2deg) translateY(-2px); }
+}
+.sw-mascot-think {
+  animation: sw-mascot-think 2.4s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-mascot-wave, .sw-mascot-nod, .sw-mascot-bounce,
+  .sw-mascot-tilt, .sw-mascot-pulse, .sw-mascot-think { animation: none !important; }
+}
