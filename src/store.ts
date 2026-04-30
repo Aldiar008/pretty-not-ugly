@@ -46,6 +46,7 @@ interface Store extends AppState {
   setMonthlyFocus: (goals: string[]) => void;
 
   setTheme: (theme: "light" | "dark") => void;
+  setMascotAnimated: (v: boolean) => void;
 
   reset: () => void;
 }
@@ -64,6 +65,7 @@ const initial: AppState = {
   interviewSessions: [],
   monthlyFocus: { month: "", goals: [] },
   theme: "light",
+  mascotAnimated: true,
 };
 
 const uuid = () => crypto.randomUUID();
@@ -214,6 +216,7 @@ export const useStore = create<Store>()(
       },
 
       setTheme: (theme) => set({ theme }),
+      setMascotAnimated: (v) => set({ mascotAnimated: v }),
 
       reset: () => set({ ...initial }),
     }),

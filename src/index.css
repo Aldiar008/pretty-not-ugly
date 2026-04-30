@@ -183,3 +183,30 @@
   border-radius: 4px;
 }
 .sw-scroll::-webkit-scrollbar-thumb:hover { background: hsl(var(--border)); }
+
+/* ===== Mascot animations ===== */
+@keyframes sw-mascot-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25%      { transform: translateY(-1.5px) rotate(-1.5deg); }
+  50%      { transform: translateY(0) rotate(0deg); }
+  75%      { transform: translateY(-1.5px) rotate(1.5deg); }
+}
+.sw-mascot-bob {
+  animation: sw-mascot-bob 4.5s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+@keyframes sw-mascot-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  94%, 98%      { transform: scaleY(0.1); }
+}
+.sw-mascot-eyes {
+  animation: sw-mascot-blink 5s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-mascot-bob, .sw-mascot-eyes { animation: none !important; }
+}

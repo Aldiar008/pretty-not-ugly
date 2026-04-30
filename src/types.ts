@@ -134,4 +134,5 @@ export interface AppState {
   interviewSessions: InterviewSession[];
   monthlyFocus: { month: string; goals: string[] };
   theme: "light" | "dark";
+  mascotAnimated: boolean;
 }
