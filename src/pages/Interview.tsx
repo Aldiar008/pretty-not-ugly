@@ -309,11 +309,25 @@ export default function Interview() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
-            placeholder="Твой ответ…"
+            placeholder={listening ? "Слушаю…" : "Говори или печатай…"}
             rows={1}
             className="max-h-40 flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none placeholder:text-text3"
             disabled={streaming}
           />
+          <button
+            type="button"
+            onClick={toggleMic}
+            disabled={streaming}
+            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border transition-colors disabled:opacity-30 ${
+              listening
+                ? "border-transparent bg-red-500 text-white animate-pulse"
+                : "border-border bg-bg3 text-text2 hover:text-foreground"
+            }`}
+            aria-label={listening ? "stop recording" : "start recording"}
+            title={listening ? "Остановить запись" : "Записать голосом"}
+          >
+            {listening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+          </button>
           <button
             type="submit"
             disabled={!input.trim() || streaming}
