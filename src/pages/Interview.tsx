@@ -34,11 +34,56 @@ export default function Interview() {
   const [language, setLanguage] = useState("ru");
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
+  const [listening, setListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+  const inputRef = useRef(input);
+  useEffect(() => { inputRef.current = input; }, [input]);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [history, streaming]);
+
+  const toggleMic = () => {
+    const SR: any = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SR) {
+      toast.error("Голосовой ввод не поддерживается. Открой в Chrome или Safari.");
+      return;
+    }
+    if (listening && recognitionRef.current) {
+      recognitionRef.current.stop();
+      return;
+    }
+    const rec = new SR();
+    rec.lang = language === "en" ? "en-US" : "ru-RU";
+    rec.interimResults = true;
+    rec.continuous = true;
+    const baseText = inputRef.current ? inputRef.current.trim() + " " : "";
+    let finalText = "";
+    rec.onresult = (e: any) => {
+      let interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const r = e.results[i];
+        if (r.isFinal) finalText += r[0].transcript + " ";
+        else interim += r[0].transcript;
+      }
+      setInput((baseText + finalText + interim).replace(/\s+/g, " ").trimStart());
+    };
+    rec.onerror = (e: any) => {
+      if (e.error !== "no-speech" && e.error !== "aborted") {
+        toast.error("Ошибка микрофона: " + e.error);
+      }
+      setListening(false);
+    };
+    rec.onend = () => setListening(false);
+    recognitionRef.current = rec;
+    try {
+      rec.start();
+      setListening(true);
+    } catch {
+      setListening(false);
+    }
+  };
 
   const start = async () => {
     setSetup(false);
