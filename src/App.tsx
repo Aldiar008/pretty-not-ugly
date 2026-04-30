@@ -12,7 +12,12 @@ import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
-import Stub from "./pages/Stub";
+import Plan from "./pages/Plan";
+import Universities from "./pages/Universities";
+import Documents from "./pages/Documents";
+import AIAdvisor from "./pages/AIAdvisor";
+import Interview from "./pages/Interview";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,12 +42,12 @@ const App = () => (
 
           <Route element={<PrivateRoute><AppLayout /></PrivateRoute>}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/plan" element={<Stub title="Мой план" description="Таймлайн и чеклист задач." />} />
-            <Route path="/universities" element={<Stub title="Университеты" description="100+ университетов, шансы поступления и заявки." />} />
-            <Route path="/documents" element={<Stub title="Документы" description="Personal Statement, эссе, транскрипты, рекомендации." />} />
-            <Route path="/ai" element={<Stub title="AI-советник" description="Чат с персональным советником по поступлению." />} />
-            <Route path="/interview" element={<Stub title="Интервью" description="Тренажёр университетских интервью с AI." />} />
-            <Route path="/profile" element={<Stub title="Профиль" description="Личные данные, академические показатели и цели." />} />
+            <Route path="/plan" element={<Plan />} />
+            <Route path="/universities" element={<Universities />} />
+            <Route path="/documents" element={<Documents />} />
+            <Route path="/ai" element={<AIAdvisor />} />
+            <Route path="/interview" element={<Interview />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
