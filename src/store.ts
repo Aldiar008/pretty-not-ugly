@@ -216,6 +216,7 @@ export const useStore = create<Store>()(
       },
 
       setTheme: (theme) => set({ theme }),
+      setMascotAnimated: (v) => set({ mascotAnimated: v }),
 
       reset: () => set({ ...initial }),
     }),
