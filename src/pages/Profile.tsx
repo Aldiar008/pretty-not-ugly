@@ -17,6 +17,8 @@ export default function Profile() {
   const updateUser = useStore((s) => s.updateUser);
   const testResults = useStore((s) => s.testResults);
   const reset = useStore((s) => s.reset);
+  const mascotAnimated = useStore((s) => s.mascotAnimated);
+  const setMascotAnimated = useStore((s) => s.setMascotAnimated);
 
   const [edit, setEdit] = useState(false);
   const [draft, setDraft] = useState(() => ({
