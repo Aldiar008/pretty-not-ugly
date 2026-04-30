@@ -4,6 +4,7 @@ import { streamChat } from "@/lib/ai";
 import ReactMarkdown from "react-markdown";
 import { Mic, MicOff, ArrowUp, RotateCcw, History, Star } from "lucide-react";
 import { RhinoLogo } from "@/components/RhinoLogo";
+import { RhinoCharacter, type MascotAnimation } from "@/components/RhinoCharacter";
 import { toast } from "sonner";
 
 const TYPES = [
