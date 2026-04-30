@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useStore } from "@/store";
 import { streamChat } from "@/lib/ai";
 import ReactMarkdown from "react-markdown";
-import { Mic, ArrowUp, RotateCcw, History, Star } from "lucide-react";
+import { Mic, MicOff, ArrowUp, RotateCcw, History, Star } from "lucide-react";
 import { RhinoLogo } from "@/components/RhinoLogo";
 import { toast } from "sonner";
 
@@ -34,11 +34,56 @@ export default function Interview() {
   const [language, setLanguage] = useState("ru");
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
+  const [listening, setListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+  const inputRef = useRef(input);
+  useEffect(() => { inputRef.current = input; }, [input]);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [history, streaming]);
+
+  const toggleMic = () => {
+    const SR: any = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SR) {
+      toast.error("Голосовой ввод не поддерживается. Открой в Chrome или Safari.");
+      return;
+    }
+    if (listening && recognitionRef.current) {
+      recognitionRef.current.stop();
+      return;
+    }
+    const rec = new SR();
+    rec.lang = language === "en" ? "en-US" : "ru-RU";
+    rec.interimResults = true;
+    rec.continuous = true;
+    const baseText = inputRef.current ? inputRef.current.trim() + " " : "";
+    let finalText = "";
+    rec.onresult = (e: any) => {
+      let interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const r = e.results[i];
+        if (r.isFinal) finalText += r[0].transcript + " ";
+        else interim += r[0].transcript;
+      }
+      setInput((baseText + finalText + interim).replace(/\s+/g, " ").trimStart());
+    };
+    rec.onerror = (e: any) => {
+      if (e.error !== "no-speech" && e.error !== "aborted") {
+        toast.error("Ошибка микрофона: " + e.error);
+      }
+      setListening(false);
+    };
+    rec.onend = () => setListening(false);
+    recognitionRef.current = rec;
+    try {
+      rec.start();
+      setListening(true);
+    } catch {
+      setListening(false);
+    }
+  };
 
   const start = async () => {
     setSetup(false);
@@ -264,11 +309,25 @@ export default function Interview() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
-            placeholder="Твой ответ…"
+            placeholder={listening ? "Слушаю…" : "Говори или печатай…"}
             rows={1}
             className="max-h-40 flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none placeholder:text-text3"
             disabled={streaming}
           />
+          <button
+            type="button"
+            onClick={toggleMic}
+            disabled={streaming}
+            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border transition-colors disabled:opacity-30 ${
+              listening
+                ? "border-transparent bg-red-500 text-white animate-pulse"
+                : "border-border bg-bg3 text-text2 hover:text-foreground"
+            }`}
+            aria-label={listening ? "stop recording" : "start recording"}
+            title={listening ? "Остановить запись" : "Записать голосом"}
+          >
+            {listening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+          </button>
           <button
             type="submit"
             disabled={!input.trim() || streaming}
