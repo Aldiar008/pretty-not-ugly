@@ -1,0 +1,4 @@
+project_id = "qqapzkajdtzoxcatpzdq"
+
+[functions.stepwise-chat]
+verify_jwt = false
