@@ -161,11 +161,13 @@ export default function Interview() {
   if (setup) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center gap-3">
-          <Mic className="h-6 w-6 text-accent" />
+        <div className="flex items-center gap-4">
+          <RhinoCharacter size={84} animation="wave" />
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight">Тренажёр интервью</h1>
-            <p className="mt-1 text-sm text-text2">Прокачай ответы перед реальным интервью с приёмной комиссией</p>
+            <h1 className="text-3xl font-semibold tracking-tight">Интервью со Степом</h1>
+            <p className="mt-1 text-sm text-text2">
+              Степ возьмёт у тебя интервью как приёмная комиссия — отвечай голосом или текстом.
+            </p>
           </div>
         </div>
 
