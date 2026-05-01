@@ -9,6 +9,7 @@ import {
   Search, Plus, ExternalLink, GraduationCap, DollarSign, Award, X, Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+import { removeWithUndo } from "@/lib/undo";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
@@ -85,6 +86,9 @@ export default function Universities() {
         <p className="mt-1 text-sm text-text2">
           {universities.length} в списке · Safety {counts.safety} · Match {counts.match} · Reach {counts.reach}
         </p>
+        <p className="mt-2 text-[11px] text-text3">
+          ⚠ AI-оценка шанса — ориентир на основе твоих баллов и требований вуза, а не гарантия поступления.
+        </p>
       </div>
 
       {/* Tabs */}
@@ -159,7 +163,7 @@ export default function Universities() {
                   key={u.id}
                   uni={u}
                   onStatus={(s) => updateUniversity(u.id, { status: s })}
-                  onRemove={() => { removeUniversity(u.id); toast("Удалено"); }}
+                  onRemove={() => removeWithUndo("university", u)}
                 />
               ))}
             </div>

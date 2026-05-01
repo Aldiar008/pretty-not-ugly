@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useStore } from "@/store";
-import rhinoMascot from "@/assets/rhino-mascot.png";
+import beggieHead from "@/assets/beggie-head.png";
 
 interface RhinoLogoProps {
   size?: number;
@@ -10,11 +10,14 @@ interface RhinoLogoProps {
 }
 
 /**
- * Step the Rhino — official mascot used everywhere across the app.
+ * Бэгги — официальный маскот Stepwise (бегемотик).
+ * Используется как лого/иконка везде. Полная фигура — см. RhinoCharacter.
  *
- * Single source of truth: `src/assets/rhino-mascot.png`.
- * Optional idle animation (gentle bob + blink) controlled globally via
+ * Single source of truth: `src/assets/beggie-head.png`.
+ * Optional idle animation (gentle bob) controlled globally via
  * `useStore().mascotAnimated`. Pass `static` to disable per-instance.
+ *
+ * Имя компонента сохранено для обратной совместимости с импортами.
  */
 export function RhinoLogo({ size = 28, className, static: isStatic = false }: RhinoLogoProps) {
   const animatedPref = useStore((s) => s.mascotAnimated);
@@ -31,8 +34,8 @@ export function RhinoLogo({ size = 28, className, static: isStatic = false }: Rh
       aria-hidden="true"
     >
       <img
-        src={rhinoMascot}
-        alt="Step the Rhino"
+        src={beggieHead}
+        alt="Бэгги"
         width={size}
         height={size}
         draggable={false}

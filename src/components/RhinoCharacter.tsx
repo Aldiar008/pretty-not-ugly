@@ -1,6 +1,9 @@
 import { cn } from "@/lib/utils";
 import { useStore } from "@/store";
-import rhinoBody from "@/assets/rhino-mascot-body.png";
+import beggieWave from "@/assets/beggie-wave.png";
+import beggieSit from "@/assets/beggie-sit.png";
+import beggieRelax from "@/assets/beggie-relax.png";
+import beggieHead from "@/assets/beggie-head.png";
 
 export type MascotAnimation =
   | "idle"      // gentle bob (default)
@@ -12,10 +15,14 @@ export type MascotAnimation =
   | "think"     // back-and-forth sway — preparing reply
   | "none";     // no animation
 
+export type MascotPose = "wave" | "sit" | "relax" | "head";
+
 interface RhinoCharacterProps {
   size?: number;
   className?: string;
   animation?: MascotAnimation;
+  /** Which static pose / artwork to display. Defaults to `wave` (full body). */
+  pose?: MascotPose;
 }
 
 const ANIM_CLASS: Record<MascotAnimation, string> = {
@@ -29,8 +36,15 @@ const ANIM_CLASS: Record<MascotAnimation, string> = {
   none: "",
 };
 
+const POSE_SRC: Record<MascotPose, string> = {
+  wave: beggieWave,
+  sit: beggieSit,
+  relax: beggieRelax,
+  head: beggieHead,
+};
+
 /**
- * Step the Rhino — full-body character with arms and legs.
+ * Бэгги — full-body персонаж с разными позами и state-driven анимациями.
  * Use this on Interview / Onboarding / hero spots where the mascot needs personality.
  *
  * Animations are state-driven (`animation` prop) and globally respect the
@@ -40,6 +54,7 @@ export function RhinoCharacter({
   size = 160,
   className,
   animation = "idle",
+  pose = "wave",
 }: RhinoCharacterProps) {
   const animatedPref = useStore((s) => s.mascotAnimated);
   const animClass = animatedPref ? ANIM_CLASS[animation] : "";
@@ -51,8 +66,8 @@ export function RhinoCharacter({
       aria-hidden="true"
     >
       <img
-        src={rhinoBody}
-        alt="Step the Rhino"
+        src={POSE_SRC[pose]}
+        alt="Бэгги"
         width={size}
         height={size}
         draggable={false}

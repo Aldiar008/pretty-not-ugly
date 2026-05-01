@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { removeWithUndo } from "@/lib/undo";
 
 const TYPES: { v: DocType; l: string }[] = [
   { v: "personal_statement", l: "Personal Statement" },
@@ -93,7 +94,7 @@ export default function Documents() {
               universityName={universities.find((u) => u.id === d.universityLinked)?.name}
               onCycle={() => updateDocument(d.id, { status: NEXT_STATUS[d.status] })}
               onStatus={(s) => updateDocument(d.id, { status: s })}
-              onRemove={() => { removeDocument(d.id); toast("Удалено"); }}
+              onRemove={() => removeWithUndo("document", d)}
             />
           ))}
         </div>
