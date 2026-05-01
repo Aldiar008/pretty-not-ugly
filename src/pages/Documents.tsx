@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { removeWithUndo } from "@/lib/undo";
 
 const TYPES: { v: DocType; l: string }[] = [
   { v: "personal_statement", l: "Personal Statement" },

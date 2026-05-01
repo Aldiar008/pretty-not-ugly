@@ -9,6 +9,7 @@ import {
   Search, Plus, ExternalLink, GraduationCap, DollarSign, Award, X, Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+import { removeWithUndo } from "@/lib/undo";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
