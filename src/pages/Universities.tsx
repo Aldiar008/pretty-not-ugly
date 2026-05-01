@@ -86,6 +86,9 @@ export default function Universities() {
         <p className="mt-1 text-sm text-text2">
           {universities.length} в списке · Safety {counts.safety} · Match {counts.match} · Reach {counts.reach}
         </p>
+        <p className="mt-2 text-[11px] text-text3">
+          ⚠ AI-оценка шанса — ориентир на основе твоих баллов и требований вуза, а не гарантия поступления.
+        </p>
       </div>
 
       {/* Tabs */}
