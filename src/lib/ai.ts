@@ -49,6 +49,8 @@ export async function streamChat(opts: StreamOpts): Promise<void> {
     user,
     universities,
     plan,
+    // For per-user rate-limiting on the edge.
+    userId: user?.id ?? null,
   };
   if (opts.mode === "interview") {
     body.university = opts.university;

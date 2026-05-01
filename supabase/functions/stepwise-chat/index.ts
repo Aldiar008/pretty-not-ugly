@@ -1,12 +1,34 @@
 // Stepwise AI gateway. Streams Lovable AI responses for advisor + interview.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
 };
+
+// Daily message limits (Free tier — Pro/billing not implemented yet).
+const DAILY_LIMIT = 30;
+// Lightweight per-IP burst limiter (in-memory, per-instance).
+const BURST_WINDOW_MS = 10_000;
+const BURST_MAX = 6;
+const burstMap = new Map<string, number[]>();
+
+function checkBurst(ip: string): boolean {
+  const now = Date.now();
+  const arr = (burstMap.get(ip) || []).filter((t) => now - t < BURST_WINDOW_MS);
+  arr.push(now);
+  burstMap.set(ip, arr);
+  // Cleanup occasionally to avoid memory growth.
+  if (burstMap.size > 5000) {
+    for (const [k, v] of burstMap) {
+      if (!v.length || now - v[v.length - 1] > BURST_WINDOW_MS) burstMap.delete(k);
+    }
+  }
+  return arr.length <= BURST_MAX;
+}
 
 interface UserCtx {
   name?: string;
@@ -124,10 +146,59 @@ serve(async (req) => {
       );
     }
 
+    // === Rate limiting ===
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("cf-connecting-ip") ||
+      "unknown";
+
+    if (!checkBurst(ip)) {
+      return new Response(
+        JSON.stringify({
+          error: "Слишком быстро! Подожди пару секунд и попробуй снова.",
+        }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const body = await req.json();
     const mode: "advisor" | "interview" = body.mode || "advisor";
     const messages: { role: "user" | "assistant"; content: string }[] =
       body.messages || [];
+
+    // Identifier: prefer logged-in user_id from client; fallback to IP.
+    const identifier = body.userId ? `u:${body.userId}` : `ip:${ip}`;
+
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+    const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    if (SUPABASE_URL && SERVICE_KEY) {
+      const admin = createClient(SUPABASE_URL, SERVICE_KEY, {
+        auth: { persistSession: false },
+      });
+      const { data: rl, error: rlErr } = await admin.rpc("increment_ai_usage", {
+        _identifier: identifier,
+        _limit: DAILY_LIMIT,
+      });
+      if (rlErr) {
+        console.error("rate-limit rpc error:", rlErr);
+      } else {
+        const row = Array.isArray(rl) ? rl[0] : rl;
+        if (row && !row.allowed) {
+          return new Response(
+            JSON.stringify({
+              error: `Дневной лимит ${DAILY_LIMIT} AI-сообщений исчерпан. Возвращайся завтра или подключи Pro.`,
+              limit: DAILY_LIMIT,
+              used: row.current_count,
+            }),
+            {
+              status: 429,
+              headers: { ...corsHeaders, "Content-Type": "application/json" },
+            }
+          );
+        }
+      }
+    }
+    // === /Rate limiting ===
 
     let systemPrompt = "";
     if (mode === "advisor") {
