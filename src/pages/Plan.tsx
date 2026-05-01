@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import type { Task, TaskCategory, Priority } from "@/types";
 import { toast } from "sonner";
+import { removeWithUndo } from "@/lib/undo";
 
 const CATEGORIES: { value: TaskCategory; label: string }[] = [
   { value: "exams", label: "Экзамены" },
@@ -135,7 +136,7 @@ export default function Plan() {
                     key={t.id}
                     task={t}
                     onToggle={() => toggleTask(t.id)}
-                    onRemove={() => { removeTask(t.id); toast("Удалено"); }}
+                    onRemove={() => removeWithUndo("task", t)}
                     universityName={universities.find((u) => u.id === t.universityLinked)?.name}
                   />
                 ))}

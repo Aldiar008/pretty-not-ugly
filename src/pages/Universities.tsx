@@ -159,7 +159,7 @@ export default function Universities() {
                   key={u.id}
                   uni={u}
                   onStatus={(s) => updateUniversity(u.id, { status: s })}
-                  onRemove={() => { removeUniversity(u.id); toast("Удалено"); }}
+                  onRemove={() => removeWithUndo("university", u)}
                 />
               ))}
             </div>

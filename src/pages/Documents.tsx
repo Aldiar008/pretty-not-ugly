@@ -93,7 +93,7 @@ export default function Documents() {
               universityName={universities.find((u) => u.id === d.universityLinked)?.name}
               onCycle={() => updateDocument(d.id, { status: NEXT_STATUS[d.status] })}
               onStatus={(s) => updateDocument(d.id, { status: s })}
-              onRemove={() => { removeDocument(d.id); toast("Удалено"); }}
+              onRemove={() => removeWithUndo("document", d)}
             />
           ))}
         </div>
