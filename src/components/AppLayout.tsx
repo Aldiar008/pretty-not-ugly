@@ -6,7 +6,7 @@ export function AppLayout() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Sidebar />
-      <main className="md:pl-[240px] pb-20 md:pb-0">
+      <main className="md:pl-[260px] pb-20 md:pb-0">
         <div className="mx-auto max-w-[1280px] px-5 py-6 md:px-10 md:py-8 animate-fade-in">
           <Outlet />
         </div>
