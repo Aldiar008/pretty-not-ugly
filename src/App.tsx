@@ -19,6 +19,8 @@ import AIAdvisor from "./pages/AIAdvisor";
 import Interview from "./pages/Interview";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import Missions from "./pages/Missions";
+import Achievements from "./pages/Achievements";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +50,8 @@ const App = () => (
             <Route path="/ai" element={<AIAdvisor />} />
             <Route path="/interview" element={<Interview />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/missions" element={<Missions />} />
+            <Route path="/achievements" element={<Achievements />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -2,36 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Stepwise design system. Strict minimalism in the spirit of Notion / Linear.
-   All colors are HSL. No gradients, no glow, no decorative shadows. */
+/* Stepwise v3.0 design system — palette stone, radius 16px, dyшащие отступы. */
 
 @layer base {
   :root {
-    /* Surfaces */
+    /* Surfaces (stone) */
     --background: 0 0% 100%;          /* #ffffff */
-    --bg-2: 60 6% 98%;                /* #f9f9f8 */
-    --bg-3: 60 5% 95%;                /* #f3f3f1 */
+    --bg-2: 60 9% 98%;                /* #fafaf9 */
+    --bg-3: 60 5% 96%;                /* #f5f5f4 */
+    --bg-elevated: 0 0% 100%;
 
     /* Text */
-    --foreground: 0 0% 10%;           /* #1a1a1a */
-    --text-2: 0 0% 42%;               /* #6b6b6b */
-    --text-3: 0 0% 63%;               /* #a0a0a0 */
+    --foreground: 24 10% 10%;         /* #1c1917 */
+    --text-2: 25 5% 45%;              /* #78716c */
+    --text-3: 24 6% 64%;              /* #a8a29e */
 
     /* Border */
-    --border: 60 9% 90%;              /* #e8e8e4 */
+    --border: 20 6% 90%;              /* #e7e5e4 */
+    --border-subtle: 30 11% 93%;
 
     /* Brand */
     --accent: 221 83% 53%;            /* #2563eb */
+    --accent-hover: 224 76% 48%;      /* #1d4ed8 */
+    --accent-subtle: 214 100% 96%;    /* #eff6ff */
     --accent-foreground: 0 0% 100%;
 
     /* Semantic */
-    --success: 142 71% 36%;           /* #16a34a */
-    --warning: 30 92% 44%;            /* #d97706 */
-    --danger: 0 73% 51%;              /* #dc2626 */
-    --purple: 258 90% 66%;            /* #8b5cf6 */
+    --success: 142 71% 36%;
+    --success-subtle: 138 76% 96%;
+    --warning: 30 92% 44%;
+    --warning-subtle: 48 100% 96%;
+    --danger: 0 73% 51%;
+    --danger-subtle: 0 86% 97%;
+    --purple: 258 90% 66%;
 
-    /* shadcn aliases mapped to Stepwise tokens */
-    --card: var(--bg-2);
+    /* shadcn aliases */
+    --card: var(--bg-elevated);
     --card-foreground: var(--foreground);
     --popover: var(--background);
     --popover-foreground: var(--foreground);
@@ -41,46 +47,45 @@
     --secondary-foreground: var(--foreground);
     --muted: var(--bg-3);
     --muted-foreground: var(--text-2);
-    --accent-bg: var(--bg-3);
     --destructive: var(--danger);
     --destructive-foreground: 0 0% 100%;
     --input: var(--border);
     --ring: var(--accent);
 
-    --radius: 0.625rem;
+    --radius: 1rem; /* 16px */
   }
 
   .dark {
-    --background: 0 0% 6%;            /* #0f0f0f */
-    --bg-2: 0 0% 10%;                 /* #1a1a1a */
-    --bg-3: 0 0% 13%;                 /* #222222 */
+    --background: 24 10% 5%;          /* #0c0a09 */
+    --bg-2: 24 10% 10%;               /* #1c1917 */
+    --bg-3: 24 6% 15%;                /* #292524 */
+    --bg-elevated: 24 10% 10%;
 
-    --foreground: 0 0% 93%;           /* #ededed */
-    --text-2: 0 0% 63%;
-    --text-3: 0 0% 35%;
+    --foreground: 60 9% 98%;          /* #fafaf9 */
+    --text-2: 24 6% 64%;              /* #a8a29e */
+    --text-3: 25 5% 45%;              /* #78716c */
 
-    --border: 0 0% 18%;               /* #2e2e2e */
+    --border: 24 5% 26%;              /* #44403c */
+    --border-subtle: 24 6% 15%;
 
     --accent: 217 91% 60%;            /* #3b82f6 */
-    --accent-foreground: 0 0% 100%;
+    --accent-hover: 221 83% 53%;
+    --accent-subtle: 217 50% 25%;
 
     --success: 142 71% 45%;
+    --success-subtle: 142 70% 12%;
     --warning: 38 92% 50%;
+    --warning-subtle: 30 80% 14%;
     --danger: 0 84% 60%;
+    --danger-subtle: 0 70% 14%;
     --purple: 258 90% 66%;
 
-    --card: var(--bg-2);
-    --card-foreground: var(--foreground);
+    --card: var(--bg-elevated);
     --popover: var(--bg-2);
-    --popover-foreground: var(--foreground);
     --primary: var(--accent);
-    --primary-foreground: var(--accent-foreground);
     --secondary: var(--bg-3);
-    --secondary-foreground: var(--foreground);
     --muted: var(--bg-3);
-    --muted-foreground: var(--text-2);
     --destructive: var(--danger);
-    --destructive-foreground: 0 0% 100%;
     --input: var(--border);
     --ring: var(--accent);
   }
@@ -100,59 +105,75 @@
     line-height: 1.6;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
+  h1 { font-size: 48px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+  h2 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+  h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
 
   .num, .tabular { font-variant-numeric: tabular-nums; }
 
-  /* Inputs */
-  input, textarea, select {
-    font-family: inherit;
-  }
+  input, textarea, select { font-family: inherit; }
 
-  ::selection {
-    background: hsl(var(--accent) / 0.25);
-  }
+  ::selection { background: hsl(var(--accent) / 0.25); }
 }
 
 @layer components {
   .sw-card {
-    @apply rounded-[10px] border bg-[hsl(var(--bg-2))] p-5;
+    @apply rounded-2xl border bg-[hsl(var(--bg-elevated))] p-6 transition-shadow;
+  }
+  .sw-card:hover {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
   }
   .sw-card-bare {
-    @apply rounded-[10px] border bg-[hsl(var(--bg-2))];
+    @apply rounded-2xl border bg-[hsl(var(--bg-elevated))];
   }
   .sw-input {
-    @apply w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm
+    @apply w-full rounded-[10px] border border-border bg-background px-4 py-3 text-[15px]
            text-foreground placeholder:text-[hsl(var(--text-3))]
            outline-none transition-colors
-           focus:border-[hsl(var(--accent))];
+           focus:border-[hsl(var(--accent))] focus:outline-2 focus:outline focus:outline-[hsl(var(--accent-subtle))];
   }
   .sw-label {
-    @apply mb-1.5 block text-xs font-medium text-[hsl(var(--text-2))];
+    @apply mb-1.5 block text-[13px] font-medium text-[hsl(var(--text-2))];
+    letter-spacing: 0.01em;
   }
   .sw-chip {
-    @apply inline-flex items-center gap-1.5 rounded-full border border-border
-           bg-[hsl(var(--bg-2))] px-2.5 py-1 text-xs text-[hsl(var(--text-2))];
+    @apply inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium
+           bg-[hsl(var(--bg-3))] text-[hsl(var(--text-2))];
+  }
+  .sw-chip-active {
+    @apply bg-[hsl(var(--accent-subtle))] text-[hsl(var(--accent))];
   }
   .sw-pill {
-    @apply inline-flex items-center gap-2 rounded-full border border-border
-           bg-[hsl(var(--bg-2))] px-3 py-1 text-xs text-[hsl(var(--text-2))];
+    @apply inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[13px] font-medium
+           bg-[hsl(var(--accent-subtle))] text-[hsl(var(--accent))];
   }
   .sw-divider { @apply h-px w-full bg-border; }
+
+  .sw-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-[10px] px-5 py-2.5
+           text-sm font-semibold text-[hsl(var(--accent-foreground))]
+           bg-[hsl(var(--accent))] transition-all duration-150
+           hover:bg-[hsl(var(--accent-hover))] hover:-translate-y-px active:translate-y-0;
+  }
+  .sw-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-[10px] px-5 py-2.5
+           text-sm font-semibold text-foreground bg-transparent border border-border
+           transition-colors duration-150 hover:bg-[hsl(var(--bg-3))];
+  }
+  .sw-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-[8px] px-3 py-2
+           text-sm font-medium text-[hsl(var(--accent))] transition-colors
+           hover:bg-[hsl(var(--accent-subtle))];
+  }
 }
 
-/* Mascot float animation */
+/* Mascot float / animations */
 @keyframes sw-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
 }
 .sw-float { animation: sw-float 3s ease-in-out infinite; }
 
-/* Loading dots for AI */
 @keyframes sw-dot {
   0%, 80%, 100% { opacity: 0.2; }
   40% { opacity: 1; }
@@ -161,7 +182,6 @@
 .sw-dot:nth-child(2) { animation-delay: 0.2s; }
 .sw-dot:nth-child(3) { animation-delay: 0.4s; }
 
-/* Markdown prose tweaks */
 .sw-prose p { margin: 0.4em 0; }
 .sw-prose ul { list-style: disc; padding-left: 1.2em; margin: 0.4em 0; }
 .sw-prose ol { list-style: decimal; padding-left: 1.4em; margin: 0.4em 0; }
@@ -176,15 +196,11 @@
 }
 .sw-prose h1, .sw-prose h2, .sw-prose h3 { margin-top: 0.7em; margin-bottom: 0.3em; }
 
-/* Scrollbar */
 .sw-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
-.sw-scroll::-webkit-scrollbar-thumb {
-  background: hsl(var(--bg-3));
-  border-radius: 4px;
-}
+.sw-scroll::-webkit-scrollbar-thumb { background: hsl(var(--bg-3)); border-radius: 4px; }
 .sw-scroll::-webkit-scrollbar-thumb:hover { background: hsl(var(--border)); }
 
-/* ===== Mascot animations ===== */
+/* Mascot subtle bob (для head-логотипа) */
 @keyframes sw-mascot-bob {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   25%      { transform: translateY(-1.5px) rotate(-1.5deg); }
@@ -197,40 +213,15 @@
   will-change: transform;
 }
 
-@keyframes sw-mascot-blink {
-  0%, 92%, 100% { transform: scaleY(1); }
-  94%, 98%      { transform: scaleY(0.1); }
-}
-.sw-mascot-eyes {
-  animation: sw-mascot-blink 5s ease-in-out infinite;
-  transform-origin: center;
-  transform-box: fill-box;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sw-mascot-bob, .sw-mascot-eyes { animation: none !important; }
-}
-
-/* ===== Mascot extra animations (variants) ===== */
+/* Поза-анимации (на больших картинках мы их в основном не используем,
+   но классы оставлены для обратной совместимости) */
 @keyframes sw-mascot-wave {
   0%, 60%, 100% { transform: rotate(0deg); }
   70%           { transform: rotate(-12deg); }
   80%           { transform: rotate(8deg); }
   90%           { transform: rotate(-6deg); }
 }
-.sw-mascot-wave {
-  animation: sw-mascot-wave 3s ease-in-out infinite;
-  transform-origin: center;
-}
-
-@keyframes sw-mascot-nod {
-  0%, 100% { transform: rotate(0deg); }
-  50%      { transform: rotate(4deg) translateY(1px); }
-}
-.sw-mascot-nod {
-  animation: sw-mascot-nod 1.4s ease-in-out infinite;
-  transform-origin: center bottom;
-}
+.sw-mascot-wave { animation: sw-mascot-wave 3s ease-in-out infinite; transform-origin: center; }
 
 @keyframes sw-mascot-bounce {
   0%, 100% { transform: translateY(0) scale(1, 1); }
@@ -238,39 +229,8 @@
   60%      { transform: translateY(-6px) scale(1.02, 0.98); }
   80%      { transform: translateY(0) scale(0.98, 1.02); }
 }
-.sw-mascot-bounce {
-  animation: sw-mascot-bounce 2s ease-in-out infinite;
-  transform-origin: center bottom;
-}
-
-@keyframes sw-mascot-tilt {
-  0%, 100% { transform: rotate(-3deg); }
-  50%      { transform: rotate(3deg); }
-}
-.sw-mascot-tilt {
-  animation: sw-mascot-tilt 3.5s ease-in-out infinite;
-  transform-origin: center bottom;
-}
-
-@keyframes sw-mascot-pulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 hsl(var(--accent) / 0)); }
-  50%      { transform: scale(1.04); filter: drop-shadow(0 0 12px hsl(var(--accent) / 0.45)); }
-}
-.sw-mascot-pulse {
-  animation: sw-mascot-pulse 1.6s ease-in-out infinite;
-  transform-origin: center;
-}
-
-@keyframes sw-mascot-think {
-  0%, 100% { transform: rotate(-2deg) translateY(0); }
-  50%      { transform: rotate(2deg) translateY(-2px); }
-}
-.sw-mascot-think {
-  animation: sw-mascot-think 2.4s ease-in-out infinite;
-  transform-origin: center bottom;
-}
+.sw-mascot-bounce { animation: sw-mascot-bounce 2s ease-in-out infinite; transform-origin: center bottom; }
 
 @media (prefers-reduced-motion: reduce) {
-  .sw-mascot-wave, .sw-mascot-nod, .sw-mascot-bounce,
-  .sw-mascot-tilt, .sw-mascot-pulse, .sw-mascot-think { animation: none !important; }
+  .sw-mascot-bob, .sw-mascot-wave, .sw-mascot-bounce, .sw-float { animation: none !important; }
 }
