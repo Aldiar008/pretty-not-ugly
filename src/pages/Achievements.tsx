@@ -26,7 +26,7 @@ export default function Achievements() {
   const uniCount = useStore((s) => s.universities.length);
   const docsDone = useStore((s) => s.documents.filter((d) => d.status === "complete" || d.status === "sent").length);
   const interviews = useStore((s) => s.interviewSessions?.length ?? 0);
-  const streak = useStore((s) => s.user?.streak ?? 0);
+  const streak = Number(localStorage.getItem("sw_streak") || 0);
 
   const earned = new Set<string>();
   if (tasksDone >= 1) earned.add("first-task");

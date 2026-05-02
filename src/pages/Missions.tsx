@@ -38,7 +38,7 @@ export default function Missions() {
   const state = useStore();
   const items = buildToday(state);
   const doneCount = items.filter((i) => i.done).length;
-  const streak = state.user?.streak ?? 0;
+  const streak = Number(localStorage.getItem("sw_streak") || 0);
 
   return (
     <div className="space-y-8">
