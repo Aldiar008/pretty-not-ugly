@@ -5,6 +5,7 @@ import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
 } from "recharts";
 import { flagFor } from "@/data/reference";
+import { ProgressRings } from "@/components/ProgressRings";
 
 export default function Dashboard() {
   const user = useStore((s) => s.user);
@@ -64,23 +65,22 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      {/* Header + Rings */}
+      <div className="sw-card flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight">
             {greet}, {user?.name?.split(" ")[0] || "друг"} 👋
           </h1>
           <p className="mt-1 text-sm text-text2">Вот срез твоего прогресса.</p>
-        </div>
-        <div className="md:w-[280px]">
-          <div className="mb-1 flex items-center justify-between text-xs text-text2">
-            <span>Общий прогресс</span>
-            <span className="tabular font-medium text-foreground">{overall}%</span>
-          </div>
-          <div className="h-2 overflow-hidden rounded-full bg-bg3">
-            <div className="h-full bg-accent transition-all duration-500" style={{ width: `${overall}%` }} />
+          <div className="mt-3 text-xs text-text2">
+            Общий прогресс: <span className="font-semibold text-foreground">{overall}%</span>
           </div>
         </div>
+        <ProgressRings
+          tasks={{ done: doneTasks, total: totalTasks }}
+          docs={{ done: doneDocs, total: totalDocs }}
+          unis={{ done: submittedUnis, total: universities.length }}
+        />
       </div>
 
       {/* Metric cards */}

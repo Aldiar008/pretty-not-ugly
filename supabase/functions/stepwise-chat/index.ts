@@ -162,7 +162,7 @@ serve(async (req) => {
     }
 
     const body = await req.json();
-    const mode: "advisor" | "interview" = body.mode || "advisor";
+    const mode: "advisor" | "interview" | "essay" = body.mode || "advisor";
     const messages: { role: "user" | "assistant"; content: string }[] =
       body.messages || [];
 
@@ -207,6 +207,19 @@ serve(async (req) => {
         body.universities || [],
         body.plan || { totalTasks: 0, doneTasks: 0 }
       );
+    } else if (mode === "essay") {
+      const action = body.essayAction || "brainstorm"; // brainstorm | draft | improve
+      const prompt = body.essayPrompt || "";
+      const draft = body.essayDraft || "";
+      const university = body.university || "целевого университета";
+      const u = body.user || {};
+      systemPrompt = `Ты профессиональный коуч по эссе для поступления в зарубежные вузы.
+Студент: ${u.name ?? ""}, специальность ${u.targetMajor ?? "не указана"}, страна ${u.country ?? ""}.
+Целевой университет: ${university}.
+Действие: ${action === "brainstorm" ? "ПРОБРЕЙНШТОРМИТЬ 5 уникальных тем-углов под промпт эссе" : action === "draft" ? "НАПИСАТЬ полный черновик эссе (450-650 слов)" : "УЛУЧШИТЬ присланный черновик: дать переписанную версию + список точечных правок"}.
+Промпт эссе/тема: ${prompt || "—"}
+${draft ? `\nЧерновик студента:\n${draft}` : ""}
+Пиши на языке студента. Markdown. Будь конкретным, без воды, без клише типа "since I was a child".`;
     } else {
       systemPrompt = buildInterviewPrompt({
         university: body.university || "Общее интервью",

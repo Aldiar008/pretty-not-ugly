@@ -352,6 +352,117 @@ export const UNIVERSITIES: UniversityRecord[] = [
 
   // Finland (1)
   u("Aalto University", "FI", "Espoo", 3.3, 1200, 6.5, 15000, true, "https://aalto.fi"),
+
+  // === Расширение каталога (Round 2) ===
+
+  // USA — extended
+  u("NYU", "US", "New York, NY", 3.6, 1380, 7.0, 58168, true, "https://nyu.edu"),
+  u("USC", "US", "Los Angeles, CA", 3.6, 1380, 7.0, 64726, true, "https://usc.edu"),
+  u("Notre Dame", "US", "Notre Dame, IN", 3.7, 1450, 7.0, 60301, true, "https://nd.edu"),
+  u("Emory University", "US", "Atlanta, GA", 3.6, 1410, 7.0, 57948, true, "https://emory.edu"),
+  u("Washington University in St. Louis", "US", "St. Louis, MO", 3.7, 1490, 7.0, 60590, true, "https://wustl.edu"),
+  u("Georgia Tech", "US", "Atlanta, GA", 3.6, 1370, 6.5, 33794, true, "https://gatech.edu"),
+  u("UIUC", "US", "Urbana, IL", 3.5, 1340, 6.5, 35110, true, "https://illinois.edu"),
+  u("UT Austin", "US", "Austin, TX", 3.5, 1330, 6.5, 41070, true, "https://utexas.edu"),
+  u("UW Seattle", "US", "Seattle, WA", 3.5, 1320, 6.5, 40740, true, "https://washington.edu"),
+  u("UC San Diego", "US", "San Diego, CA", 3.6, 1340, 7.0, 44487, true, "https://ucsd.edu"),
+  u("UC Davis", "US", "Davis, CA", 3.4, 1280, 7.0, 44245, true, "https://ucdavis.edu"),
+  u("UC Irvine", "US", "Irvine, CA", 3.4, 1270, 7.0, 43473, true, "https://uci.edu"),
+  u("Penn State", "US", "University Park, PA", 3.3, 1240, 6.5, 38651, true, "https://psu.edu"),
+  u("Ohio State University", "US", "Columbus, OH", 3.3, 1240, 6.5, 36722, true, "https://osu.edu"),
+  u("University of Wisconsin–Madison", "US", "Madison, WI", 3.4, 1280, 6.5, 39354, true, "https://wisc.edu"),
+  u("University of Florida", "US", "Gainesville, FL", 3.4, 1290, 6.5, 28658, true, "https://ufl.edu"),
+  u("University of Maryland", "US", "College Park, MD", 3.4, 1290, 6.5, 39469, true, "https://umd.edu"),
+  u("Stony Brook University", "US", "Stony Brook, NY", 3.3, 1230, 6.5, 28471, true, "https://stonybrook.edu"),
+  u("Virginia Tech", "US", "Blacksburg, VA", 3.3, 1240, 6.5, 32893, true, "https://vt.edu"),
+
+  // UK — extended
+  u("University of St Andrews", "GB", "St Andrews", 3.5, 1300, 6.5, 30160, true, "https://st-andrews.ac.uk"),
+  u("University of Sheffield", "GB", "Sheffield", 3.0, 1130, 6.0, 19560, false, "https://sheffield.ac.uk"),
+  u("Queen Mary University of London", "GB", "London", 3.0, 1140, 6.5, 21950, false, "https://qmul.ac.uk"),
+  u("Lancaster University", "GB", "Lancaster", 3.0, 1130, 6.5, 19150, false, "https://lancaster.ac.uk"),
+  u("University of Exeter", "GB", "Exeter", 3.1, 1170, 6.5, 21500, false, "https://exeter.ac.uk"),
+  u("University of York", "GB", "York", 3.1, 1170, 6.5, 21500, false, "https://york.ac.uk"),
+  u("University of Southampton", "GB", "Southampton", 3.1, 1180, 6.5, 22300, true, "https://soton.ac.uk"),
+  u("Cardiff University", "GB", "Cardiff", 3.0, 1120, 6.0, 19500, false, "https://cardiff.ac.uk"),
+
+  // Germany — extended
+  u("University of Bonn", "DE", "Bonn", 3.0, 1100, 6.0, 0, false, "https://uni-bonn.de"),
+  u("University of Göttingen", "DE", "Göttingen", 3.0, 1100, 6.0, 0, false, "https://uni-goettingen.de"),
+  u("University of Cologne", "DE", "Cologne", 3.0, 1080, 5.5, 0, false, "https://uni-koeln.de"),
+  u("Goethe University Frankfurt", "DE", "Frankfurt", 3.0, 1090, 6.0, 0, true, "https://uni-frankfurt.de"),
+  u("Technische Universität Darmstadt", "DE", "Darmstadt", 3.1, 1120, 6.0, 0, true, "https://tu-darmstadt.de"),
+
+  // Canada — extended
+  u("Simon Fraser University", "CA", "Burnaby", 3.2, 1180, 6.5, 31000, true, "https://sfu.ca"),
+  u("Dalhousie University", "CA", "Halifax", 3.2, 1170, 6.5, 24000, false, "https://dal.ca"),
+  u("Concordia University", "CA", "Montreal", 3.0, 1100, 6.5, 26000, false, "https://concordia.ca"),
+  u("University of Ottawa", "CA", "Ottawa", 3.2, 1180, 6.5, 36000, true, "https://uottawa.ca"),
+
+  // Italy — extended
+  u("Bocconi University", "IT", "Milan", 3.5, 1310, 6.5, 16000, true, "https://unibocconi.eu"),
+  u("Sapienza University of Rome", "IT", "Rome", 3.0, 1100, 5.5, 3000, true, "https://uniroma1.it"),
+  u("Politecnico di Torino", "IT", "Turin", 3.1, 1140, 6.0, 3500, true, "https://polito.it"),
+
+  // Spain
+  u("IE University", "ES", "Madrid", 3.4, 1280, 6.5, 25000, true, "https://ie.edu"),
+  u("Universitat Pompeu Fabra", "ES", "Barcelona", 3.2, 1180, 6.5, 4500, true, "https://upf.edu"),
+  u("Universidad Complutense de Madrid", "ES", "Madrid", 3.0, 1100, 6.0, 3500, false, "https://ucm.es"),
+  u("ESADE", "ES", "Barcelona", 3.4, 1280, 6.5, 27000, true, "https://esade.edu"),
+
+  // Belgium / Ireland / Portugal / Denmark / Norway
+  u("KU Leuven", "BE", "Leuven", 3.3, 1220, 6.5, 5000, true, "https://kuleuven.be"),
+  u("Trinity College Dublin", "IE", "Dublin", 3.4, 1280, 6.5, 24000, true, "https://tcd.ie"),
+  u("University College Dublin", "IE", "Dublin", 3.3, 1220, 6.5, 22000, true, "https://ucd.ie"),
+  u("University of Lisbon", "PT", "Lisbon", 3.0, 1100, 6.0, 3000, false, "https://ulisboa.pt"),
+  u("University of Copenhagen", "DK", "Copenhagen", 3.3, 1220, 6.5, 13500, true, "https://ku.dk"),
+  u("DTU", "DK", "Lyngby", 3.4, 1260, 6.5, 16500, true, "https://dtu.dk"),
+  u("University of Oslo", "NO", "Oslo", 3.2, 1170, 6.5, 0, true, "https://uio.no"),
+  u("NTNU", "NO", "Trondheim", 3.2, 1180, 6.5, 0, true, "https://ntnu.edu"),
+
+  // Poland / Czech / Hungary
+  u("University of Warsaw", "PL", "Warsaw", 3.0, 1100, 6.0, 4000, true, "https://uw.edu.pl"),
+  u("Jagiellonian University", "PL", "Kraków", 3.0, 1100, 6.0, 4000, true, "https://uj.edu.pl"),
+  u("Central European University", "HU", "Budapest", 3.4, 1280, 6.5, 13000, true, "https://ceu.edu"),
+
+  // Asia — extended
+  u("HKU", "HK", "Hong Kong", 3.6, 1370, 6.5, 22000, true, "https://hku.hk"),
+  u("HKUST", "HK", "Hong Kong", 3.6, 1370, 6.5, 21000, true, "https://hkust.edu.hk"),
+  u("CUHK", "HK", "Hong Kong", 3.5, 1340, 6.5, 19500, true, "https://cuhk.edu.hk"),
+  u("Yonsei University", "KR", "Seoul", 3.4, 1280, 6.5, 12000, true, "https://yonsei.ac.kr"),
+  u("Korea University", "KR", "Seoul", 3.4, 1280, 6.5, 11000, true, "https://korea.ac.kr"),
+  u("Waseda University", "JP", "Tokyo", 3.3, 1220, 6.5, 10000, true, "https://waseda.jp"),
+  u("Keio University", "JP", "Tokyo", 3.3, 1220, 6.5, 10000, true, "https://keio.ac.jp"),
+  u("Fudan University", "CN", "Shanghai", 3.6, 1360, 6.5, 7000, true, "https://fudan.edu.cn"),
+  u("Shanghai Jiao Tong University", "CN", "Shanghai", 3.6, 1360, 6.5, 7000, true, "https://sjtu.edu.cn"),
+  u("Zhejiang University", "CN", "Hangzhou", 3.5, 1330, 6.5, 6500, true, "https://zju.edu.cn"),
+  u("IIT Bombay", "IN", "Mumbai", 3.5, 1340, 6.5, 3500, true, "https://iitb.ac.in"),
+  u("IIT Delhi", "IN", "New Delhi", 3.5, 1340, 6.5, 3500, true, "https://iitd.ac.in"),
+  u("IISc Bangalore", "IN", "Bangalore", 3.6, 1360, 6.5, 3000, true, "https://iisc.ac.in"),
+
+  // Middle East
+  u("KAUST", "SA", "Thuwal", 3.5, 1320, 6.5, 0, true, "https://kaust.edu.sa"),
+  u("American University of Beirut", "IL", "Beirut", 3.2, 1180, 6.5, 22000, true, "https://aub.edu.lb"),
+  u("Tel Aviv University", "IL", "Tel Aviv", 3.3, 1220, 6.5, 14000, true, "https://tau.ac.il"),
+  u("Technion", "IL", "Haifa", 3.5, 1320, 6.5, 14500, true, "https://technion.ac.il"),
+  u("Hebrew University of Jerusalem", "IL", "Jerusalem", 3.4, 1280, 6.5, 14000, true, "https://huji.ac.il"),
+
+  // Turkey
+  u("Bogazici University", "TR", "Istanbul", 3.3, 1230, 6.5, 5000, true, "https://boun.edu.tr"),
+  u("Koç University", "TR", "Istanbul", 3.4, 1280, 6.5, 25000, true, "https://ku.edu.tr"),
+  u("Sabancı University", "TR", "Istanbul", 3.3, 1240, 6.5, 24000, true, "https://sabanciuniv.edu"),
+
+  // CIS / regional
+  u("Nazarbayev University", "KZ", "Astana", 3.3, 1240, 6.5, 0, true, "https://nu.edu.kz"),
+  u("KIMEP University", "KZ", "Almaty", 3.0, 1100, 6.0, 8000, true, "https://kimep.kz"),
+  u("Suleyman Demirel University", "KZ", "Almaty", 2.9, 1050, 5.5, 5000, true, "https://sdu.edu.kz"),
+  u("HSE", "RU", "Moscow", 3.3, 1240, 6.5, 4500, true, "https://hse.ru"),
+  u("MGIMO", "RU", "Moscow", 3.4, 1280, 6.5, 7000, false, "https://mgimo.ru"),
+  u("MIPT", "RU", "Moscow", 3.6, 1360, 6.5, 5000, true, "https://mipt.ru"),
+  u("Saint Petersburg State University", "RU", "St. Petersburg", 3.3, 1230, 6.5, 4500, true, "https://spbu.ru"),
+  u("Innopolis University", "RU", "Innopolis", 3.4, 1290, 6.5, 6000, true, "https://innopolis.university"),
+  u("BSU", "BY", "Minsk", 3.0, 1100, 6.0, 3500, false, "https://bsu.by"),
+  u("KNU", "UA", "Kyiv", 3.0, 1100, 6.0, 3000, false, "https://knu.ua"),
 ];
 
 // Chance calculation

@@ -95,7 +95,7 @@ export default function Universities() {
       <div className="flex gap-1 rounded-lg border border-border bg-bg2 p-1 w-fit">
         {[
           { v: "my", l: "Мои заявки" },
-          { v: "browse", l: "Каталог · 100+" },
+          { v: "browse", l: `Каталог · ${UNIVERSITIES.length}+` },
         ].map((t) => (
           <button
             key={t.v}

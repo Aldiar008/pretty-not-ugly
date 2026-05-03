@@ -9,7 +9,7 @@ export interface ChatMsg {
 }
 
 interface StreamOpts {
-  mode: "advisor" | "interview";
+  mode: "advisor" | "interview" | "essay";
   messages: ChatMsg[];
   onDelta: (chunk: string) => void;
   onError?: (e: Error) => void;
@@ -18,6 +18,10 @@ interface StreamOpts {
   type?: string;
   major?: string;
   language?: string;
+  // Essay specifics
+  essayAction?: "brainstorm" | "draft" | "improve";
+  essayPrompt?: string;
+  essayDraft?: string;
 }
 
 export async function streamChat(opts: StreamOpts): Promise<void> {
@@ -57,6 +61,12 @@ export async function streamChat(opts: StreamOpts): Promise<void> {
     body.type = opts.type;
     body.major = opts.major;
     body.language = opts.language;
+  }
+  if (opts.mode === "essay") {
+    body.university = opts.university;
+    body.essayAction = opts.essayAction;
+    body.essayPrompt = opts.essayPrompt;
+    body.essayDraft = opts.essayDraft;
   }
 
   const resp = await fetch(CHAT_URL, {
