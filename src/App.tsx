@@ -21,6 +21,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Missions from "./pages/Missions";
 import Achievements from "./pages/Achievements";
+import EssayStudio from "./pages/EssayStudio";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/missions" element={<Missions />} />
             <Route path="/achievements" element={<Achievements />} />
+            <Route path="/essay" element={<EssayStudio />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

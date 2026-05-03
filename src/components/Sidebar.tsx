@@ -13,6 +13,7 @@ import {
   Zap,
   Trophy,
   Flame,
+  PenLine,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { RhinoLogo } from "./RhinoLogo";
@@ -34,6 +35,7 @@ export function Sidebar() {
     { to: "/plan", label: t("nav.plan"), icon: ListChecks },
     { to: "/universities", label: t("nav.universities"), icon: Building2 },
     { to: "/documents", label: t("nav.documents"), icon: FileText },
+    { to: "/essay", label: t("nav.essay"), icon: PenLine },
     { to: "/ai", label: t("nav.ai"), icon: Bot },
     { to: "/interview", label: t("nav.interview"), icon: Mic },
     { to: "/missions", label: t("nav.missions"), icon: Zap },
