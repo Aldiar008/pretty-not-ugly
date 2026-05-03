@@ -5,6 +5,7 @@ import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
 } from "recharts";
 import { flagFor } from "@/data/reference";
+import { ProgressRings } from "@/components/ProgressRings";
 
 export default function Dashboard() {
   const user = useStore((s) => s.user);
