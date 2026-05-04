@@ -52,6 +52,35 @@ export default function Documents() {
     return m;
   }, [documents]);
 
+  const SUGGESTIONS: { type: DocType; name: string }[] = useMemo(() => {
+    const have = new Set(documents.map((d) => `${d.type}:${d.name.toLowerCase()}`));
+    const list: { type: DocType; name: string }[] = [
+      { type: "personal_statement", name: "Personal Statement" },
+      { type: "transcript", name: "Школьный транскрипт" },
+      { type: "recommendation", name: "Рекомендательное письмо #1" },
+      { type: "recommendation", name: "Рекомендательное письмо #2" },
+      { type: "certificate", name: "Сертификат IELTS / TOEFL" },
+      { type: "certificate", name: "Сертификат олимпиады / награда" },
+      { type: "financial", name: "Справка о доходах семьи" },
+      { type: "essay", name: "Supplemental эссе 'Why us'" },
+      { type: "other", name: "Скан паспорта" },
+      { type: "other", name: "CV / резюме" },
+    ];
+    return list.filter((s) => !have.has(`${s.type}:${s.name.toLowerCase()}`)).slice(0, 6);
+  }, [documents]);
+
+  const quickAdd = (s: { type: DocType; name: string }) => {
+    addDocument({
+      name: s.name,
+      type: s.type,
+      status: "not_started",
+      deadline: null,
+      notes: "",
+      universityLinked: null,
+    });
+    toast.success(`«${s.name}» добавлен`);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
@@ -68,6 +97,23 @@ export default function Documents() {
           <Plus className="h-4 w-4" /> Новый документ
         </button>
       </div>
+
+      {SUGGESTIONS.length > 0 && (
+        <div className="sw-card">
+          <div className="mb-2 text-xs uppercase tracking-wider text-text3">Быстро добавить</div>
+          <div className="flex flex-wrap gap-2">
+            {SUGGESTIONS.map((s) => (
+              <button
+                key={s.type + s.name}
+                onClick={() => quickAdd(s)}
+                className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-border bg-bg2 px-3 py-1.5 text-xs text-text2 hover:border-accent hover:text-foreground"
+              >
+                <Plus className="h-3 w-3" /> {s.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Status filter chips */}
       <div className="flex flex-wrap gap-2">
