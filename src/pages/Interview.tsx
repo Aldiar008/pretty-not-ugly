@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useStore } from "@/store";
 import { streamChat } from "@/lib/ai";
 import ReactMarkdown from "react-markdown";
-import { Mic, MicOff, ArrowUp, RotateCcw, History, Star } from "lucide-react";
+import { Mic, MicOff, RotateCcw, History, Star, Send, Video, VideoOff } from "lucide-react";
 import { RhinoCharacter, type MascotAnimation } from "@/components/RhinoCharacter";
 import { toast } from "sonner";
 
