@@ -228,14 +228,8 @@ export default function Profile() {
             </div>
             {testResults ? (
               <>
-                <div className="h-[240px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={testResults.scores}>
-                      <PolarGrid stroke="hsl(var(--border))" />
-                      <PolarAngleAxis dataKey="category" tick={{ fontSize: 11, fill: "hsl(var(--text-2))" }} />
-                      <Radar dataKey="score" stroke="hsl(var(--accent))" fill="hsl(var(--accent))" fillOpacity={0.2} />
-                    </RadarChart>
-                  </ResponsiveContainer>
+                <div className="flex justify-center">
+                  <SpiderChart data={testResults.scores} size={260} />
                 </div>
                 <div className="mt-2 space-y-1.5 text-sm">
                   <div><span className="text-text2">Сильные стороны:</span> <strong>{testResults.topCompetencies.join(", ")}</strong></div>
@@ -250,6 +244,7 @@ export default function Profile() {
               </>
             ) : (
               <div className="space-y-3 py-4 text-center">
+                <SpiderChart data={[]} size={220} />
                 <p className="text-sm text-text3">Тест компетенций не пройден</p>
                 <button
                   onClick={() => navigate("/onboarding")}
@@ -259,38 +254,6 @@ export default function Profile() {
                 </button>
               </div>
             )}
-          </section>
-
-          <section className="sw-card space-y-3">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-text2">Внешний вид</h2>
-            <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-bg2 px-3.5 py-3">
-              <div className="flex min-w-0 items-center gap-3">
-                <RhinoLogo size={32} />
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5 text-sm font-medium">
-                    <Sparkles className="h-3.5 w-3.5 text-accent" />
-                    Анимация маскота
-                  </div>
-                  <p className="text-xs text-text3">Лёгкое покачивание и моргание Степа</p>
-                </div>
-              </div>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={mascotAnimated}
-                onClick={() => setMascotAnimated(!mascotAnimated)}
-                className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors ${
-                  mascotAnimated ? "bg-foreground" : "bg-bg3 border border-border"
-                }`}
-                aria-label="Переключить анимацию маскота"
-              >
-                <span
-                  className={`absolute top-0.5 h-5 w-5 rounded-full bg-background shadow transition-transform ${
-                    mascotAnimated ? "translate-x-[22px]" : "translate-x-0.5"
-                  }`}
-                />
-              </button>
-            </div>
           </section>
 
           <section className="sw-card">
