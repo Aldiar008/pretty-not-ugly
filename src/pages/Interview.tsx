@@ -35,6 +35,9 @@ export default function Interview() {
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [listening, setListening] = useState(false);
+  const [cameraOn, setCameraOn] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const cameraStreamRef = useRef<MediaStream | null>(null);
   const recognitionRef = useRef<any>(null);
   const inputRef = useRef(input);
   useEffect(() => { inputRef.current = input; }, [input]);
@@ -43,6 +46,29 @@ export default function Interview() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [history, streaming]);
+
+  const toggleCamera = async () => {
+    if (cameraOn) {
+      cameraStreamRef.current?.getTracks().forEach((t) => t.stop());
+      cameraStreamRef.current = null;
+      if (videoRef.current) videoRef.current.srcObject = null;
+      setCameraOn(false);
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+      cameraStreamRef.current = stream;
+      if (videoRef.current) videoRef.current.srcObject = stream;
+      setCameraOn(true);
+    } catch (e: any) {
+      toast.error("Нет доступа к камере: " + (e.message || e.name || ""));
+    }
+  };
+
+  useEffect(() => () => {
+    cameraStreamRef.current?.getTracks().forEach((t) => t.stop());
+    try { recognitionRef.current?.stop?.(); } catch {}
+  }, []);
 
   const toggleMic = () => {
     const SR: any = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
