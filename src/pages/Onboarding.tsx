@@ -4,14 +4,7 @@ import { useStore } from "@/store";
 import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor, convertScore } from "@/data/reference";
 import { TEST_QUESTIONS, COMPETENCE_AXES, MAJOR_RECOMMENDATIONS } from "@/data/test-questions";
 import type { Task, Document } from "@/types";
-import {
-  Radar,
-  RadarChart as RChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ResponsiveContainer,
-} from "recharts";
+import { SpiderChart } from "@/components/SpiderChart";
 import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 import { toast } from "sonner";
 
@@ -288,15 +281,8 @@ export default function Onboarding() {
             <div className="grid gap-4 md:grid-cols-2">
               <div className="sw-card">
                 <div className="mb-3 text-xs uppercase tracking-wider text-text3">Радар компетенций</div>
-                <div className="h-[220px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RChart data={testResult?.scores || []}>
-                      <PolarGrid stroke="hsl(var(--border))" />
-                      <PolarAngleAxis dataKey="category" tick={{ fontSize: 11, fill: "hsl(var(--text-2))" }} />
-                      <PolarRadiusAxis tick={false} axisLine={false} />
-                      <Radar dataKey="score" stroke="hsl(var(--accent))" fill="hsl(var(--accent))" fillOpacity={0.2} />
-                    </RChart>
-                  </ResponsiveContainer>
+                <div className="flex justify-center">
+                  <SpiderChart data={testResult?.scores || []} size={240} />
                 </div>
               </div>
               <div className="sw-card">

@@ -1,11 +1,9 @@
 import { useStore } from "@/store";
 import { Link } from "react-router-dom";
 import { AlertCircle, Plus, ArrowRight } from "lucide-react";
-import {
-  Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
-} from "recharts";
 import { flagFor } from "@/data/reference";
 import { ProgressRings } from "@/components/ProgressRings";
+import { SpiderChart } from "@/components/SpiderChart";
 
 export default function Dashboard() {
   const user = useStore((s) => s.user);
@@ -187,28 +185,19 @@ export default function Dashboard() {
         <div className="space-y-6">
           <section className="sw-card">
             <h2 className="mb-4 text-base font-semibold">Компетенции</h2>
-            {testResults ? (
-              <>
-                <div className="h-[220px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={testResults.scores}>
-                      <PolarGrid stroke="hsl(var(--border))" />
-                      <PolarAngleAxis dataKey="category" tick={{ fontSize: 11, fill: "hsl(var(--text-2))" }} />
-                      <PolarRadiusAxis tick={false} axisLine={false} />
-                      <Radar dataKey="score" stroke="hsl(var(--accent))" fill="hsl(var(--accent))" fillOpacity={0.2} />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
+            <div className="flex flex-col items-center">
+              <SpiderChart data={testResults?.scores ?? []} size={240} />
+              {testResults ? (
                 <div className="mt-2 text-center text-sm">
                   <span className="text-text2">Главная сила:</span>{" "}
                   <strong>{testResults.topCompetencies.join(", ")}</strong>
                 </div>
-              </>
-            ) : (
-              <div className="py-10 text-center text-sm text-text3">
-                Пройди тест компетенций в профиле
-              </div>
-            )}
+              ) : (
+                <Link to="/onboarding" className="mt-2 text-xs text-accent hover:underline">
+                  Пройди тест, чтобы увидеть свои сильные стороны →
+                </Link>
+              )}
+            </div>
           </section>
 
           <section className="sw-card">
