@@ -2,11 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@/store";
 import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor, convertScore, flagFor, countryName } from "@/data/reference";
-import {
-  Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer,
-} from "recharts";
-import { LogOut, Save, Edit2, BarChart3, Sparkles } from "lucide-react";
-import { RhinoLogo } from "@/components/RhinoLogo";
+import { LogOut, Save, Edit2, BarChart3 } from "lucide-react";
+import { SpiderChart } from "@/components/SpiderChart";
 import { toast } from "sonner";
 
 const TARGET_COUNTRIES = ["US", "GB", "DE", "CA", "NL", "AU", "CH", "SG", "KR", "AE", "JP", "FR"];
