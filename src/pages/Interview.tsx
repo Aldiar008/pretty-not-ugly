@@ -307,6 +307,16 @@ export default function Interview() {
         </div>
         <div className="flex gap-2">
           <button
+            onClick={toggleCamera}
+            className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs ${
+              cameraOn ? "border-accent bg-accent/10 text-accent" : "border-border bg-bg2 text-text2 hover:text-foreground"
+            }`}
+            title={cameraOn ? "Выключить камеру" : "Включить камеру"}
+          >
+            {cameraOn ? <VideoOff className="h-3.5 w-3.5" /> : <Video className="h-3.5 w-3.5" />}
+            {cameraOn ? "Камера" : "Камера"}
+          </button>
+          <button
             onClick={finish}
             className="rounded-lg border border-border bg-bg2 px-3 py-1.5 text-xs hover:bg-bg3"
           >
@@ -320,6 +330,17 @@ export default function Interview() {
           </button>
         </div>
       </div>
+
+      {cameraOn && (
+        <div className="mb-3 mx-auto w-full max-w-3xl">
+          <div className="relative aspect-video w-full max-w-xs ml-auto overflow-hidden rounded-xl border border-border bg-black">
+            <video ref={videoRef} autoPlay muted playsInline className="h-full w-full object-cover" />
+            <span className="absolute top-2 left-2 rounded-md bg-black/60 px-2 py-0.5 text-[10px] text-white">
+              ● запись
+            </span>
+          </div>
+        </div>
+      )}
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto sw-scroll">
         <div className="mx-auto max-w-3xl space-y-6 pb-4">
@@ -357,41 +378,47 @@ export default function Interview() {
         </div>
       </div>
 
-      <form onSubmit={(e) => { e.preventDefault(); send(); }} className="mt-4 mx-auto w-full max-w-3xl">
-        <div className="flex items-end gap-2 rounded-2xl border border-border bg-bg2 p-2 focus-within:border-text3">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
-            placeholder={listening ? "Слушаю…" : "Говори или печатай…"}
-            rows={1}
-            className="max-h-40 flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none placeholder:text-text3"
-            disabled={streaming}
-          />
-          <button
-            type="button"
-            onClick={toggleMic}
-            disabled={streaming}
-            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border transition-colors disabled:opacity-30 ${
-              listening
-                ? "border-transparent bg-red-500 text-white animate-pulse"
-                : "border-border bg-bg3 text-text2 hover:text-foreground"
-            }`}
-            aria-label={listening ? "stop recording" : "start recording"}
-            title={listening ? "Остановить запись" : "Записать голосом"}
-          >
-            {listening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-          </button>
-          <button
-            type="submit"
-            disabled={!input.trim() || streaming}
-            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-foreground text-background hover:opacity-90 disabled:opacity-30"
-            aria-label="send"
-          >
-            <ArrowUp className="h-4 w-4" />
-          </button>
+      <div className="mt-4 mx-auto w-full max-w-3xl">
+        <div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-bg2 p-4">
+          {input.trim() && (
+            <div className="w-full rounded-lg bg-background px-3 py-2 text-sm text-text2">
+              {input}
+            </div>
+          )}
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={toggleMic}
+              disabled={streaming}
+              className={`flex h-14 w-14 items-center justify-center rounded-full border-2 transition-all disabled:opacity-30 ${
+                listening
+                  ? "border-red-500 bg-red-500 text-white animate-pulse"
+                  : "border-foreground bg-foreground text-background hover:opacity-90"
+              }`}
+              aria-label={listening ? "stop recording" : "start recording"}
+              title={listening ? "Остановить запись" : "Говорить"}
+            >
+              {listening ? <MicOff className="h-6 w-6" /> : <Mic className="h-6 w-6" />}
+            </button>
+            <button
+              type="button"
+              onClick={() => { if (input.trim() && !streaming) send(); }}
+              disabled={!input.trim() || streaming || listening}
+              className="inline-flex h-12 items-center gap-1.5 rounded-full bg-bg3 px-5 text-sm font-medium text-foreground hover:bg-bg3/70 disabled:opacity-30"
+              title="Отправить ответ"
+            >
+              <Send className="h-4 w-4" /> Отправить ответ
+            </button>
+          </div>
+          <p className="text-xs text-text3">
+            {listening
+              ? "Говори свободно — Степ слышит. Нажми ещё раз, чтобы остановить."
+              : input.trim()
+                ? "Готов? Нажми «Отправить ответ»."
+                : "Это интервью — отвечай голосом. Нажми микрофон, чтобы начать."}
+          </p>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
