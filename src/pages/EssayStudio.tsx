@@ -246,7 +246,7 @@ export default function EssayStudio() {
             placeholder='Например: "Why this major?" или Common App #1'
           />
           <div className="mt-2 flex flex-wrap gap-1.5">
-            {COMMON_PROMPTS.map((p) => (
+            {promptOptions.map((p) => (
               <button
                 key={p}
                 type="button"
