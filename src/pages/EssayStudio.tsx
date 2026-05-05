@@ -99,6 +99,13 @@ export default function EssayStudio() {
     [documents],
   );
 
+  // Country-aware prompt list — depends on the selected university.
+  const promptOptions = useMemo(() => {
+    if (!selectedUni) return GENERIC_PROMPTS;
+    const byCountry = PROMPTS_BY_COUNTRY[selectedUni.country];
+    return byCountry ? [...byCountry, ...GENERIC_PROMPTS.slice(0, 2)] : GENERIC_PROMPTS;
+  }, [selectedUni]);
+
   const validate = (): string | null => {
     if (universities.length === 0) return "Сначала добавь университеты в свой список";
     if (!universityId) return "Выбери университет";
