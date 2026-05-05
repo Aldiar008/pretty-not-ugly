@@ -285,6 +285,15 @@ export default function EssayStudio() {
                 ))}
               </div>
             )}
+            {selectedUni && (
+              <button
+                type="button"
+                onClick={() => setDraft(starterDraft(selectedUni.name, selectedUni.country, targetMajor))}
+                className="mt-2 rounded-full border border-dashed border-border bg-bg2 px-2.5 py-1 text-[11px] text-text2 hover:text-foreground"
+              >
+                ✨ Стартовый черновик под {selectedUni.name}
+              </button>
+            )}
             <div className="mt-1 text-[11px] tabular text-text3">
               {draft.trim() ? draft.trim().split(/\s+/).length : 0} слов
             </div>
