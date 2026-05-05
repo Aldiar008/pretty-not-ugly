@@ -8,14 +8,71 @@ import { flagFor } from "@/data/reference";
 
 type Action = "brainstorm" | "draft" | "improve";
 
-const COMMON_PROMPTS = [
+// Country-specific prompt presets — keeps Essay Studio output distinct per uni list.
+const PROMPTS_BY_COUNTRY: Record<string, string[]> = {
+  US: [
+    "Common App #1: Background, identity, interest or talent",
+    "Common App #5: Accomplishment that sparked personal growth",
+    "Why this major? (Why CS / Why Econ)",
+    "Why us? — конкретные курсы и сообщества",
+    "Extracurricular activity that matters most (150 words)",
+  ],
+  UK: [
+    "UCAS Personal Statement: академический интерес",
+    "Super-curriculars: что читал/делал вне школы",
+    "Лидерский/командный опыт по предмету",
+    "Career goals и почему этот курс к ним ведёт",
+  ],
+  CA: [
+    "UofT/UBC supplementary: leadership in your community",
+    "Why this program at this Canadian university?",
+    "Challenge you faced and what you learned",
+  ],
+  DE: [
+    "Motivationsschreiben: почему эта программа в Германии",
+    "Academic background и связь со специальностью",
+    "Почему Германия и долгосрочные планы",
+  ],
+  NL: [
+    "Motivation letter: fit с small-scale teaching",
+    "Why this Dutch programme — language, structure, projects",
+  ],
+  KR: [
+    "Self-introduction letter (자기소개서)",
+    "Study plan (학업계획서) — конкретные курсы и цели",
+  ],
+  JP: [
+    "Statement of Purpose для японского вуза",
+    "Why Japan и долгосрочные исследовательские планы",
+  ],
+};
+
+const GENERIC_PROMPTS = [
   "Why this major?",
   "Why this university? (Why us)",
   "Расскажи о себе (Personal Statement)",
   "Самый значимый вызов в жизни",
   "Лидерский опыт и его влияние",
-  "Какую проблему ты хочешь решить",
 ];
+
+function starterDraft(uniName: string, country: string, major?: string): string {
+  const m = major || "своей будущей специальности";
+  const lower = uniName.toLowerCase();
+  if (/oxford|cambridge/.test(lower)) {
+    return `Tutorial-style learning at ${uniName} appeals to me because debating ideas one-on-one is how I learn best. In ${m}, I want to test my reasoning against an expert weekly, not just read about it. [Продолжи: конкретный академический интерес → tutorial → исследовательская цель]`;
+  }
+  if (/harvard|yale|princeton|stanford|mit|columbia|brown|dartmouth|cornell|penn/.test(lower)) {
+    return `When I first encountered ${m}, it was not in a classroom — it was [конкретный момент]. ${uniName}'s [конкретная программа/лаб] is where I want to push that question further, alongside [конкретная инициатива/community]. [Развёрнутая личная история на 400+ слов]`;
+  }
+  if (country === "UK") {
+    return `My interest in ${m} began with [конкретный текст/проект] and has grown through [super-curricular: чтение, MOOC, олимпиада]. Beyond the syllabus, I [практический опыт]. The course at ${uniName} attracts me because [конкретные модули]. [Продолжи в академическом UCAS-стиле]`;
+  }
+  if (country === "DE") {
+    return `Meine Motivation für das Studium ${m} an ${uniName} ergibt sich aus [конкретный академический опыт]. Besonders interessiert mich [конкретный модуль/профессор]. [Продолжи: background → программа → планы]`;
+  }
+  return `My path toward ${m} took shape when [конкретный момент, не клише]. At ${uniName}, I want to build on this through [конкретный курс/проект/community]. [Развёрни в 450–650 слов с конкретикой]`;
+}
+
 
 export default function EssayStudio() {
   const universities = useStore((s) => s.universities);
