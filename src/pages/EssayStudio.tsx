@@ -126,6 +126,8 @@ export default function EssayStudio() {
         mode: "essay",
         messages: [{ role: "user", content: prompt || "—" }],
         university: selectedUni?.name || "целевого университета",
+        universityCountry: selectedUni?.country,
+        universityTier: selectedUni?.tier,
         major: targetMajor,
         essayAction: action,
         essayPrompt: prompt,
