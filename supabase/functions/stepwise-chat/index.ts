@@ -208,17 +208,31 @@ serve(async (req) => {
         body.plan || { totalTasks: 0, doneTasks: 0 }
       );
     } else if (mode === "essay") {
-      const action = body.essayAction || "brainstorm"; // brainstorm | draft | improve
+      const action = body.essayAction || "brainstorm";
       const prompt = body.essayPrompt || "";
       const draft = body.essayDraft || "";
       const university = body.university || "целевого университета";
+      const uniCountry = body.universityCountry || "";
+      const uniTier = body.universityTier || "";
       const u = body.user || {};
+      const otherUnis: UniCtx[] = body.universities || [];
+      const otherList = otherUnis
+        .filter((x) => x.name !== university)
+        .slice(0, 8)
+        .map((x) => `${x.name} (${x.country})`)
+        .join(", ");
       systemPrompt = `Ты профессиональный коуч по эссе для поступления в зарубежные вузы.
 Студент: ${u.name ?? ""}, специальность ${u.targetMajor ?? "не указана"}, страна ${u.country ?? ""}.
-Целевой университет: ${university}.
+Целевой университет: ${university}${uniCountry ? ` (${uniCountry})` : ""}${uniTier ? `, tier: ${uniTier}` : ""}.
+Другие вузы в списке: ${otherList || "нет"}.
 Действие: ${action === "brainstorm" ? "ПРОБРЕЙНШТОРМИТЬ 5 уникальных тем-углов под промпт эссе" : action === "draft" ? "НАПИСАТЬ полный черновик эссе (450-650 слов)" : "УЛУЧШИТЬ присланный черновик: дать переписанную версию + список точечных правок"}.
 Промпт эссе/тема: ${prompt || "—"}
 ${draft ? `\nЧерновик студента:\n${draft}` : ""}
+
+Важно:
+- Учитывай специфику ${university}: его культуру, ценности, программы и стиль приёмной комиссии страны ${uniCountry || "целевой"}.
+- Если пишешь "Why us" — упомяни конкретные курсы/профессоров/традиции, не общие фразы.
+- Не повторяй то же эссе для разных университетов — каждый вуз требует своего угла.
 Пиши на языке студента. Markdown. Будь конкретным, без воды, без клише типа "since I was a child".`;
     } else {
       systemPrompt = buildInterviewPrompt({

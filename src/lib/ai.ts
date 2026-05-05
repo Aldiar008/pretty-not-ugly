@@ -22,6 +22,8 @@ interface StreamOpts {
   essayAction?: "brainstorm" | "draft" | "improve";
   essayPrompt?: string;
   essayDraft?: string;
+  universityCountry?: string;
+  universityTier?: string;
 }
 
 export async function streamChat(opts: StreamOpts): Promise<void> {
@@ -64,6 +66,8 @@ export async function streamChat(opts: StreamOpts): Promise<void> {
   }
   if (opts.mode === "essay") {
     body.university = opts.university;
+    body.universityCountry = opts.universityCountry;
+    body.universityTier = opts.universityTier;
     body.essayAction = opts.essayAction;
     body.essayPrompt = opts.essayPrompt;
     body.essayDraft = opts.essayDraft;
