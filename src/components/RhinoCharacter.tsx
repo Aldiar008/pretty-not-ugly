@@ -61,7 +61,11 @@ export function RhinoCharacter({
 
   return (
     <span
-      className={cn("inline-block align-middle", animClass, className)}
+      className={cn(
+        "inline-flex items-center justify-center align-middle rounded-full overflow-hidden bg-[hsl(var(--accent)/0.12)] ring-2 ring-[hsl(var(--accent)/0.35)]",
+        animClass,
+        className,
+      )}
       style={{ width: size, height: size, lineHeight: 0 }}
       aria-hidden="true"
     >
@@ -72,7 +76,7 @@ export function RhinoCharacter({
         height={size}
         draggable={false}
         loading="lazy"
-        className="h-full w-full select-none object-contain"
+        className="h-[115%] w-[115%] select-none object-cover object-center"
       />
     </span>
   );
