@@ -1,14 +1,17 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@/store";
-import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor, convertScore } from "@/data/reference";
+import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor } from "@/data/reference";
 import { TEST_QUESTIONS, COMPETENCE_AXES, MAJOR_RECOMMENDATIONS } from "@/data/test-questions";
 import type { Task, Document } from "@/types";
 import { SpiderChart } from "@/components/SpiderChart";
 import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 import { toast } from "sonner";
 
-const TARGET_COUNTRIES = ["US", "GB", "DE", "CA", "NL", "AU", "CH", "SG", "KR", "AE", "JP", "FR"];
+const TARGET_COUNTRIES = [
+  "US", "GB", "CA", "AU", "SG", "KR", "AE", "JP",
+  "DE", "NL", "CH", "FR", "IT", "ES", "SE", "NO", "FI", "DK", "IE", "BE", "AT", "PL", "CZ", "PT",
+];
 
 export default function Onboarding() {
   const navigate = useNavigate();
@@ -31,7 +34,8 @@ export default function Onboarding() {
   const [sat, setSat] = useState(user?.sat?.toString() || "");
   const [ielts, setIelts] = useState(user?.ielts?.toString() || "");
   const [toefl, setToefl] = useState(user?.toefl?.toString() || "");
-  const conv = convertScore(country, parseFloat(nationalScore));
+  const [expected, setExpected] = useState(false);
+  
 
   // Step 3
   const [targetCountries, setTargetCountries] = useState<string[]>(user?.targetCountries || []);
@@ -46,12 +50,14 @@ export default function Onboarding() {
     if (Object.keys(answers).length !== TEST_QUESTIONS.length) return null;
     const counts: Record<string, number> = { Аналитика: 0, Креатив: 0, Коммуникация: 0, Лидерство: 0, Техника: 0 };
     for (const cat of Object.values(answers)) counts[cat] = (counts[cat] || 0) + 1;
+    const totalQ = TEST_QUESTIONS.length;
     const max = Math.max(...Object.values(counts));
     const top = Object.entries(counts).filter(([, v]) => v === max).map(([k]) => k);
     const recommended = MAJOR_RECOMMENDATIONS[top[0]] || ["Computer Science"];
     return {
       date: new Date().toISOString(),
-      scores: COMPETENCE_AXES.map((c) => ({ category: c, score: counts[c] || 0 })),
+      // Normalize raw counts (0..N) to a 0..100 scale so the radar chart renders correctly.
+      scores: COMPETENCE_AXES.map((c) => ({ category: c, score: Math.round(((counts[c] || 0) / totalQ) * 100) })),
       topCompetencies: top,
       recommendedMajors: recommended,
     };
@@ -63,8 +69,8 @@ export default function Onboarding() {
     }
     if (step === 1) {
       updateUser({
-        gpa: gpa ? parseFloat(gpa) : conv.gpa,
-        sat: sat ? parseInt(sat) : conv.sat,
+        gpa: gpa ? parseFloat(gpa) : null,
+        sat: sat ? parseInt(sat) : null,
         ielts: ielts ? parseFloat(ielts) : null,
         toefl: toefl ? parseInt(toefl) : null,
         nationalExam: exam.name,
@@ -178,10 +184,18 @@ export default function Onboarding() {
               <p className="mt-2 text-text2">Чем точнее данные — тем точнее расчёт шансов.</p>
             </div>
             <div className="sw-card space-y-4">
-              <Field label={`${exam.name} — баллы`}>
+              <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-bg2 px-3 py-2">
+                <div className="text-xs text-text2">
+                  Ещё не сдавал(а) экзамены? Укажи <strong>ожидаемые</strong> результаты — пересчитаем шансы.
+                </div>
+                <label className="flex items-center gap-2 text-xs">
+                  <input type="checkbox" checked={expected} onChange={(e) => setExpected(e.target.checked)} />
+                  Ожидаемые
+                </label>
+              </div>
+              <Field label={`${exam.name} — ${expected ? "ожидаемые" : "фактические"} баллы`}>
                 <input type="number" className="sw-input" value={nationalScore} onChange={(e) => setNationalScore(e.target.value)} placeholder={`до ${exam.max}`} />
                 <div className="mt-1 text-xs text-text3">{exam.hint}</div>
-                {conv.gpa && <div className="mt-1 text-xs text-text2 tabular">≈ GPA {conv.gpa} / SAT {conv.sat} / {conv.pct}%</div>}
               </Field>
               <div className="grid grid-cols-2 gap-3">
                 <Field label="GPA (0–4.0)"><input className="sw-input" value={gpa} onChange={(e) => setGpa(e.target.value)} placeholder="3.7" /><Hint text="Медиана топ-50: 3.8" /></Field>
@@ -189,7 +203,7 @@ export default function Onboarding() {
                 <Field label="IELTS (0–9.0)"><input className="sw-input" value={ielts} onChange={(e) => setIelts(e.target.value)} placeholder="7.0" /><Hint text="Минимум для топа: 7.0" /></Field>
                 <Field label="TOEFL (0–120)"><input className="sw-input" value={toefl} onChange={(e) => setToefl(e.target.value)} placeholder="100" /><Hint text="Минимум для топа: 100" /></Field>
               </div>
-              <LevelMeter score={parseFloat(gpa) || conv.gpa || 0} />
+              <LevelMeter score={parseFloat(gpa) || 0} />
             </div>
           </div>
         )}
@@ -244,8 +258,15 @@ export default function Onboarding() {
               <h1 className="text-3xl font-semibold tracking-tight">Тест компетенций</h1>
               <p className="mt-2 text-text2">Определим твои сильные стороны.</p>
             </div>
-            <div className="text-xs text-text3 tabular">
-              Вопрос {qIdx + 1} из {TEST_QUESTIONS.length}
+            <div className="flex items-center justify-between gap-3 text-xs text-text3 tabular">
+              <span>Вопрос {qIdx + 1} из {TEST_QUESTIONS.length}</span>
+              <button
+                type="button"
+                onClick={() => { setAnswers({}); setQIdx(0); }}
+                className="rounded-md border border-border bg-bg2 px-2 py-1 text-text2 hover:text-foreground"
+              >
+                Перезапустить тест
+              </button>
             </div>
             <div className="h-1 w-full rounded-full bg-bg3">
               <div className="h-full rounded-full bg-accent transition-all duration-300" style={{ width: `${((qIdx + 1) / TEST_QUESTIONS.length) * 100}%` }} />
@@ -294,6 +315,13 @@ export default function Onboarding() {
                     </li>
                   ))}
                 </ul>
+                <button
+                  type="button"
+                  onClick={() => { setAnswers({}); setQIdx(0); setStep(3); }}
+                  className="mt-4 w-full rounded-lg border border-border bg-bg2 px-3 py-2 text-xs hover:bg-bg3"
+                >
+                  Перезапустить тест
+                </button>
               </div>
             </div>
             <div className="sw-card">

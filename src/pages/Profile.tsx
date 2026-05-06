@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@/store";
-import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor, convertScore, flagFor, countryName } from "@/data/reference";
+import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor, flagFor, countryName } from "@/data/reference";
 import { LogOut, Save, Edit2, BarChart3 } from "lucide-react";
 import { SpiderChart } from "@/components/SpiderChart";
 import { toast } from "sonner";
 
-const TARGET_COUNTRIES = ["US", "GB", "DE", "CA", "NL", "AU", "CH", "SG", "KR", "AE", "JP", "FR"];
+const TARGET_COUNTRIES = [
+  "US", "GB", "CA", "AU", "SG", "KR", "AE", "JP",
+  // Europe
+  "DE", "NL", "CH", "FR", "IT", "ES", "SE", "NO", "FI", "DK", "IE", "BE", "AT", "PL", "CZ", "PT",
+];
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -34,20 +38,17 @@ export default function Profile() {
   if (!user) return null;
 
   const exam = examFor(draft.country);
-  const conv = convertScore(draft.country, parseFloat(draft.nationalScore));
 
   const save = () => {
     const ns = draft.nationalScore ? parseFloat(draft.nationalScore) : null;
-    const gpaVal = draft.gpa ? parseFloat(draft.gpa) : (ns !== null ? conv.gpa : null);
-    const satVal = draft.sat ? parseInt(draft.sat) : (ns !== null ? conv.sat : null);
     updateUser({
       name: draft.name,
       country: draft.country,
       grade: draft.grade,
       startYear: draft.startYear,
       nationalScore: ns,
-      gpa: gpaVal,
-      sat: satVal,
+      gpa: draft.gpa ? parseFloat(draft.gpa) : null,
+      sat: draft.sat ? parseInt(draft.sat) : null,
       ielts: draft.ielts ? parseFloat(draft.ielts) : null,
       toefl: draft.toefl ? parseInt(draft.toefl) : null,
       targetCountries: draft.targetCountries,
@@ -147,12 +148,12 @@ export default function Profile() {
               </Field>
               <Field label="GPA (4.0)">
                 {edit
-                  ? <input className="sw-input tabular" placeholder={conv.gpa ? `авто ${conv.gpa}` : ""} value={draft.gpa} onChange={(e) => setDraft({...draft, gpa: e.target.value})} />
+                  ? <input className="sw-input tabular" placeholder="3.7" value={draft.gpa} onChange={(e) => setDraft({...draft, gpa: e.target.value})} />
                   : <Value>{user.gpa ?? "—"}</Value>}
               </Field>
               <Field label="SAT">
                 {edit
-                  ? <input className="sw-input tabular" placeholder={conv.sat ? `авто ${conv.sat}` : ""} value={draft.sat} onChange={(e) => setDraft({...draft, sat: e.target.value})} />
+                  ? <input className="sw-input tabular" placeholder="1450" value={draft.sat} onChange={(e) => setDraft({...draft, sat: e.target.value})} />
                   : <Value>{user.sat ?? "—"}</Value>}
               </Field>
               <Field label="IELTS">

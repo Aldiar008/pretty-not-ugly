@@ -70,7 +70,7 @@ export default function AIAdvisor() {
           <RhinoLogo size={32} />
           <div>
             <h1 className="text-xl font-semibold tracking-tight">AI-советник</h1>
-            <p className="text-xs text-text3">Step знает твой план, заявки и дедлайны</p>
+            <p className="text-xs text-text3">Бэгги знает твой план, заявки и дедлайны</p>
           </div>
         </div>
         {history.length > 0 && (
@@ -130,7 +130,7 @@ export default function AIAdvisor() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
-            placeholder="Спроси Step что угодно…"
+            placeholder="Спроси Бэгги что угодно…"
             rows={1}
             className="max-h-40 flex-1 resize-none bg-transparent px-3 py-2 text-sm outline-none placeholder:text-text3"
             disabled={streaming}
@@ -145,7 +145,7 @@ export default function AIAdvisor() {
           </button>
         </div>
         <p className="mt-2 text-center text-[11px] text-text3">
-          Step может ошибаться — проверяй важные детали на сайтах вузов.
+          Бэгги может ошибаться — проверяй важные детали на сайтах вузов.
         </p>
       </form>
     </div>

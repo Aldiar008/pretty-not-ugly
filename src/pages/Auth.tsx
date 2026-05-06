@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useStore } from "@/store";
 import { RhinoLogo } from "@/components/RhinoLogo";
-import { COUNTRIES, GRADES, examFor, convertScore } from "@/data/reference";
+import { COUNTRIES, GRADES, examFor } from "@/data/reference";
 import { toast } from "sonner";
 import { ChevronDown } from "lucide-react";
 
@@ -30,7 +30,7 @@ export default function Auth() {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const exam = examFor(country);
-  const conv = convertScore(country, parseFloat(nationalScore));
+  
 
   function validate() {
     const e: Record<string, string> = {};
@@ -58,8 +58,8 @@ export default function Auth() {
         email: email.trim(),
         country,
         grade,
-        gpa: gpa ? parseFloat(gpa) : conv.gpa,
-        sat: sat ? parseInt(sat) : conv.sat,
+        gpa: gpa ? parseFloat(gpa) : null,
+        sat: sat ? parseInt(sat) : null,
         ielts: ielts ? parseFloat(ielts) : null,
         toefl: toefl ? parseInt(toefl) : null,
         nationalExam: exam.name,
@@ -142,11 +142,6 @@ export default function Auth() {
                   placeholder={`до ${exam.max}`}
                 />
                 <div className="mt-1 text-xs text-text3">{exam.hint}</div>
-                {conv.gpa && (
-                  <div className="mt-1 text-xs text-text2 tabular">
-                    ≈ GPA {conv.gpa} / SAT {conv.sat} / {conv.pct}%
-                  </div>
-                )}
               </Field>
               <button
                 type="button"

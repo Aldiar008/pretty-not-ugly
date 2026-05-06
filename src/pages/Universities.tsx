@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useStore } from "@/store";
 import {
-  UNIVERSITIES, COUNTRIES, calculateChance, flagFor,
+  UNIVERSITIES, COUNTRIES, calculateChance, flagFor, majorField, uniFields,
 } from "@/data/reference";
 import type { UniversityRecord } from "@/data/reference";
 import type { UniversityApplication, UniversityStatus } from "@/types";
@@ -56,20 +56,23 @@ export default function Universities() {
       .sort((a, b) => b.chancePercent - a.chancePercent);
   }, [search, country, tierFilter, user?.gpa, user?.sat, user?.ielts]);
 
-  // Recommendations: top 3 match
+  // Recommendations: blend chance + targets + major fit
   const recommendations = useMemo(() => {
     const targets = user?.targetCountries ?? [];
+    const userField = majorField(user?.targetMajor || "");
     return UNIVERSITIES.map((u) => {
       const { chancePercent, tier } = calculateChance(userScores, {
         minGpa: u.minGpa, minSat: u.minSat, minIelts: u.minIelts,
       });
-      const targetBoost = targets.includes(u.country) ? 10 : 0;
-      return { ...u, chancePercent, tier, _score: chancePercent + targetBoost };
+      const targetBoost = targets.includes(u.country) ? 12 : 0;
+      const fields = uniFields(u);
+      const majorBoost = fields.has(userField) ? 8 : -10;
+      return { ...u, chancePercent, tier, _score: chancePercent + targetBoost + majorBoost };
     })
-      .filter((u) => u.tier === "match")
+      .filter((u) => u.tier !== "reach")
       .sort((a, b) => b._score - a._score)
       .slice(0, 3);
-  }, [user?.targetCountries, user?.gpa, user?.sat, user?.ielts]);
+  }, [user?.targetCountries, user?.targetMajor, user?.gpa, user?.sat, user?.ielts]);
 
   const isAdded = (rec: UniversityRecord) => universities.some((u) => u.name === rec.name);
 
@@ -116,7 +119,7 @@ export default function Universities() {
             <section className="sw-card">
               <div className="mb-3 flex items-center gap-2">
                 <Award className="h-4 w-4 text-accent" />
-                <h2 className="text-sm font-semibold">Рекомендации Step</h2>
+                <h2 className="text-sm font-semibold">Рекомендации Бэгги</h2>
                 <span className="text-xs text-text3">— под твой профиль</span>
               </div>
               <div className="grid gap-3 md:grid-cols-3">
@@ -370,7 +373,7 @@ function AddDialog({
             </select>
           </div>
           <p className="text-xs text-text3">
-            Step автоматически создаст задачи: проверить требования, написать эссе, подать заявку.
+            Бэгги автоматически создаст задачи: проверить требования, написать эссе, подать заявку.
           </p>
         </div>
         <div className="flex justify-end gap-2">
