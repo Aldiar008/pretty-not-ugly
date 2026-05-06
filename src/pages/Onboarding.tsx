@@ -258,8 +258,15 @@ export default function Onboarding() {
               <h1 className="text-3xl font-semibold tracking-tight">Тест компетенций</h1>
               <p className="mt-2 text-text2">Определим твои сильные стороны.</p>
             </div>
-            <div className="text-xs text-text3 tabular">
-              Вопрос {qIdx + 1} из {TEST_QUESTIONS.length}
+            <div className="flex items-center justify-between gap-3 text-xs text-text3 tabular">
+              <span>Вопрос {qIdx + 1} из {TEST_QUESTIONS.length}</span>
+              <button
+                type="button"
+                onClick={() => { setAnswers({}); setQIdx(0); }}
+                className="rounded-md border border-border bg-bg2 px-2 py-1 text-text2 hover:text-foreground"
+              >
+                Перезапустить тест
+              </button>
             </div>
             <div className="h-1 w-full rounded-full bg-bg3">
               <div className="h-full rounded-full bg-accent transition-all duration-300" style={{ width: `${((qIdx + 1) / TEST_QUESTIONS.length) * 100}%` }} />
