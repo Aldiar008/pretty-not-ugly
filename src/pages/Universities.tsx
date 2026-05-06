@@ -56,20 +56,23 @@ export default function Universities() {
       .sort((a, b) => b.chancePercent - a.chancePercent);
   }, [search, country, tierFilter, user?.gpa, user?.sat, user?.ielts]);
 
-  // Recommendations: top 3 match
+  // Recommendations: blend chance + targets + major fit
   const recommendations = useMemo(() => {
     const targets = user?.targetCountries ?? [];
+    const userField = majorField(user?.targetMajor || "");
     return UNIVERSITIES.map((u) => {
       const { chancePercent, tier } = calculateChance(userScores, {
         minGpa: u.minGpa, minSat: u.minSat, minIelts: u.minIelts,
       });
-      const targetBoost = targets.includes(u.country) ? 10 : 0;
-      return { ...u, chancePercent, tier, _score: chancePercent + targetBoost };
+      const targetBoost = targets.includes(u.country) ? 12 : 0;
+      const fields = uniFields(u);
+      const majorBoost = fields.has(userField) ? 8 : -10;
+      return { ...u, chancePercent, tier, _score: chancePercent + targetBoost + majorBoost };
     })
-      .filter((u) => u.tier === "match")
+      .filter((u) => u.tier !== "reach")
       .sort((a, b) => b._score - a._score)
       .slice(0, 3);
-  }, [user?.targetCountries, user?.gpa, user?.sat, user?.ielts]);
+  }, [user?.targetCountries, user?.targetMajor, user?.gpa, user?.sat, user?.ielts]);
 
   const isAdded = (rec: UniversityRecord) => universities.some((u) => u.name === rec.name);
 
