@@ -147,12 +147,12 @@ export default function Profile() {
               </Field>
               <Field label="GPA (4.0)">
                 {edit
-                  ? <input className="sw-input tabular" placeholder={conv.gpa ? `авто ${conv.gpa}` : ""} value={draft.gpa} onChange={(e) => setDraft({...draft, gpa: e.target.value})} />
+                  ? <input className="sw-input tabular" placeholder="3.7" value={draft.gpa} onChange={(e) => setDraft({...draft, gpa: e.target.value})} />
                   : <Value>{user.gpa ?? "—"}</Value>}
               </Field>
               <Field label="SAT">
                 {edit
-                  ? <input className="sw-input tabular" placeholder={conv.sat ? `авто ${conv.sat}` : ""} value={draft.sat} onChange={(e) => setDraft({...draft, sat: e.target.value})} />
+                  ? <input className="sw-input tabular" placeholder="1450" value={draft.sat} onChange={(e) => setDraft({...draft, sat: e.target.value})} />
                   : <Value>{user.sat ?? "—"}</Value>}
               </Field>
               <Field label="IELTS">
