@@ -50,12 +50,14 @@ export default function Onboarding() {
     if (Object.keys(answers).length !== TEST_QUESTIONS.length) return null;
     const counts: Record<string, number> = { Аналитика: 0, Креатив: 0, Коммуникация: 0, Лидерство: 0, Техника: 0 };
     for (const cat of Object.values(answers)) counts[cat] = (counts[cat] || 0) + 1;
+    const totalQ = TEST_QUESTIONS.length;
     const max = Math.max(...Object.values(counts));
     const top = Object.entries(counts).filter(([, v]) => v === max).map(([k]) => k);
     const recommended = MAJOR_RECOMMENDATIONS[top[0]] || ["Computer Science"];
     return {
       date: new Date().toISOString(),
-      scores: COMPETENCE_AXES.map((c) => ({ category: c, score: counts[c] || 0 })),
+      // Normalize raw counts (0..N) to a 0..100 scale so the radar chart renders correctly.
+      scores: COMPETENCE_AXES.map((c) => ({ category: c, score: Math.round(((counts[c] || 0) / totalQ) * 100) })),
       topCompetencies: top,
       recommendedMajors: recommended,
     };
