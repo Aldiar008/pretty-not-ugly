@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@/store";
-import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor, convertScore } from "@/data/reference";
+import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor } from "@/data/reference";
 import { TEST_QUESTIONS, COMPETENCE_AXES, MAJOR_RECOMMENDATIONS } from "@/data/test-questions";
 import type { Task, Document } from "@/types";
 import { SpiderChart } from "@/components/SpiderChart";
