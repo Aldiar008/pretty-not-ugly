@@ -34,20 +34,17 @@ export default function Profile() {
   if (!user) return null;
 
   const exam = examFor(draft.country);
-  const conv = convertScore(draft.country, parseFloat(draft.nationalScore));
 
   const save = () => {
     const ns = draft.nationalScore ? parseFloat(draft.nationalScore) : null;
-    const gpaVal = draft.gpa ? parseFloat(draft.gpa) : (ns !== null ? conv.gpa : null);
-    const satVal = draft.sat ? parseInt(draft.sat) : (ns !== null ? conv.sat : null);
     updateUser({
       name: draft.name,
       country: draft.country,
       grade: draft.grade,
       startYear: draft.startYear,
       nationalScore: ns,
-      gpa: gpaVal,
-      sat: satVal,
+      gpa: draft.gpa ? parseFloat(draft.gpa) : null,
+      sat: draft.sat ? parseInt(draft.sat) : null,
       ielts: draft.ielts ? parseFloat(draft.ielts) : null,
       toefl: draft.toefl ? parseInt(draft.toefl) : null,
       targetCountries: draft.targetCountries,
