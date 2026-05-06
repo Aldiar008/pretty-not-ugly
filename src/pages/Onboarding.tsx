@@ -8,7 +8,10 @@ import { SpiderChart } from "@/components/SpiderChart";
 import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 import { toast } from "sonner";
 
-const TARGET_COUNTRIES = ["US", "GB", "DE", "CA", "NL", "AU", "CH", "SG", "KR", "AE", "JP", "FR"];
+const TARGET_COUNTRIES = [
+  "US", "GB", "CA", "AU", "SG", "KR", "AE", "JP",
+  "DE", "NL", "CH", "FR", "IT", "ES", "SE", "NO", "FI", "DK", "IE", "BE", "AT", "PL", "CZ", "PT",
+];
 
 export default function Onboarding() {
   const navigate = useNavigate();
