@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useStore } from "@/store";
 import {
-  UNIVERSITIES, COUNTRIES, calculateChance, flagFor,
+  UNIVERSITIES, COUNTRIES, calculateChance, flagFor, majorField, uniFields,
 } from "@/data/reference";
 import type { UniversityRecord } from "@/data/reference";
 import type { UniversityApplication, UniversityStatus } from "@/types";
