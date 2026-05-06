@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "@/store";
-import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor, convertScore, flagFor, countryName } from "@/data/reference";
+import { COUNTRIES, GRADES, MAJORS, BUDGETS, examFor, flagFor, countryName } from "@/data/reference";
 import { LogOut, Save, Edit2, BarChart3 } from "lucide-react";
 import { SpiderChart } from "@/components/SpiderChart";
 import { toast } from "sonner";
