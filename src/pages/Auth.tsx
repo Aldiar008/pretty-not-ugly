@@ -30,7 +30,7 @@ export default function Auth() {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const exam = examFor(country);
-  const conv = convertScore(country, parseFloat(nationalScore));
+  
 
   function validate() {
     const e: Record<string, string> = {};
