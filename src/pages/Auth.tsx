@@ -142,11 +142,6 @@ export default function Auth() {
                   placeholder={`до ${exam.max}`}
                 />
                 <div className="mt-1 text-xs text-text3">{exam.hint}</div>
-                {conv.gpa && (
-                  <div className="mt-1 text-xs text-text2 tabular">
-                    ≈ GPA {conv.gpa} / SAT {conv.sat} / {conv.pct}%
-                  </div>
-                )}
               </Field>
               <button
                 type="button"
