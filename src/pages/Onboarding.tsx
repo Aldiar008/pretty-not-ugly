@@ -34,6 +34,7 @@ export default function Onboarding() {
   const [sat, setSat] = useState(user?.sat?.toString() || "");
   const [ielts, setIelts] = useState(user?.ielts?.toString() || "");
   const [toefl, setToefl] = useState(user?.toefl?.toString() || "");
+  const [expected, setExpected] = useState(false);
   const conv = convertScore(country, parseFloat(nationalScore));
 
   // Step 3
