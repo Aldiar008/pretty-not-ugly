@@ -116,7 +116,7 @@ export default function Universities() {
             <section className="sw-card">
               <div className="mb-3 flex items-center gap-2">
                 <Award className="h-4 w-4 text-accent" />
-                <h2 className="text-sm font-semibold">Рекомендации Step</h2>
+                <h2 className="text-sm font-semibold">Рекомендации Бэгги</h2>
                 <span className="text-xs text-text3">— под твой профиль</span>
               </div>
               <div className="grid gap-3 md:grid-cols-3">
@@ -370,7 +370,7 @@ function AddDialog({
             </select>
           </div>
           <p className="text-xs text-text3">
-            Step автоматически создаст задачи: проверить требования, написать эссе, подать заявку.
+            Бэгги автоматически создаст задачи: проверить требования, написать эссе, подать заявку.
           </p>
         </div>
         <div className="flex justify-end gap-2">

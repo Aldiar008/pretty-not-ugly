@@ -129,7 +129,7 @@ export default function Documents() {
         <div className="sw-card flex flex-col items-center gap-3 py-14 text-center">
           <FileText className="h-8 w-8 text-text3" />
           <div className="font-semibold">Документов нет</div>
-          <p className="max-w-sm text-sm text-text2">Добавь Personal Statement, эссе, транскрипты — Step будет следить за статусами.</p>
+          <p className="max-w-sm text-sm text-text2">Добавь Personal Statement, эссе, транскрипты — Бэгги будет следить за статусами.</p>
         </div>
       ) : (
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
