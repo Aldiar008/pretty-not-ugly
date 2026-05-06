@@ -132,27 +132,65 @@ export function convertScore(country: string, score: number | null): { gpa: numb
 }
 
 export const MAJORS = [
-  "Computer Science",
-  "Software Engineering",
-  "Data Science",
-  "Electrical Engineering",
-  "Mechanical Engineering",
-  "Business Administration",
-  "Finance",
-  "Economics",
-  "Medicine",
-  "Pharmacy",
-  "Law",
-  "Architecture",
-  "Design",
-  "Mathematics",
-  "Physics",
-  "Psychology",
-  "International Relations",
-  "Journalism",
-  "Education",
+  // Tech / Engineering
+  "Computer Science", "Software Engineering", "Data Science", "Artificial Intelligence",
+  "Cybersecurity", "Information Systems", "Game Development", "Robotics",
+  "Electrical Engineering", "Mechanical Engineering", "Civil Engineering",
+  "Aerospace Engineering", "Chemical Engineering", "Biomedical Engineering",
+  "Industrial Engineering", "Environmental Engineering", "Materials Science",
+  // Business / Economics
+  "Business Administration", "Finance", "Accounting", "Marketing", "Management",
+  "Entrepreneurship", "International Business", "Supply Chain", "HR Management",
+  "Economics", "Econometrics", "Actuarial Science",
+  // Sciences
+  "Mathematics", "Physics", "Chemistry", "Biology", "Biotechnology", "Neuroscience",
+  "Astronomy", "Earth Sciences", "Environmental Science", "Statistics",
+  // Medicine / Health
+  "Medicine", "Dentistry", "Pharmacy", "Nursing", "Public Health", "Veterinary",
+  "Nutrition", "Physiotherapy", "Psychology",
+  // Law / Social
+  "Law", "International Relations", "Political Science", "Sociology", "Anthropology",
+  "Philosophy", "History", "Linguistics",
+  // Arts / Humanities
+  "Architecture", "Industrial Design", "Graphic Design", "UX/UI Design",
+  "Fashion Design", "Animation", "Film & Media", "Music", "Fine Arts",
+  "Literature", "Cultural Studies",
+  // Communication / Education
+  "Journalism", "Communications", "Public Relations", "Education", "Linguistics & Translation",
+  // Hospitality / Misc
+  "Hospitality Management", "Tourism", "Sports Science", "Agriculture",
+  "Urban Planning", "Logistics",
   "Other",
 ];
+
+// Map a major to a high-level field for matching against universities.
+export function majorField(major: string): string {
+  const m = major.toLowerCase();
+  if (/(comput|software|data|cyber|ai|artificial|game|info|robot)/.test(m)) return "tech";
+  if (/(engineer|aero|mechan|electric|civil|chemic|materi|industrial|environment)/.test(m)) return "engineering";
+  if (/(business|finance|account|market|management|entrepre|hr|supply|hospitality|tourism|logistic)/.test(m)) return "business";
+  if (/(econom|actuar|statist)/.test(m)) return "economics";
+  if (/(math|physics|chem|biolog|biotech|neuro|astron|earth|environment|science)/.test(m)) return "sciences";
+  if (/(medic|dent|pharm|nurs|health|veter|nutri|physio|psych)/.test(m)) return "medicine";
+  if (/(law|relations|politic|sociol|anthrop|philos|history|linguist)/.test(m)) return "law_social";
+  if (/(architect|design|art|animation|film|music|literat|cultur|fashion)/.test(m)) return "arts";
+  if (/(journal|communic|public relat|education|translat)/.test(m)) return "communication";
+  return "other";
+}
+
+// Heuristically infer fields a university covers from its name.
+export function uniFields(uni: { name: string }): Set<string> {
+  const n = uni.name.toLowerCase();
+  const f = new Set<string>(["tech", "engineering", "business", "economics", "sciences", "law_social", "arts", "communication", "other"]);
+  if (/(business|hec|essec|esade|bocconi|mgimo|kimep)/.test(n)) {
+    return new Set(["business", "economics", "law_social", "communication"]);
+  }
+  if (/(polytechn|technical|tech|institute of technology|tu |kth|ethz|epfl|kaist|postech|iit|mipt|innopolis|delft|eindhoven|aalto|technion|cvut|cmu|caltech|gatech|imperial)/.test(n)) {
+    f.delete("law_social");
+  }
+  if (/(medic|health)/.test(n)) f.add("medicine");
+  return f;
+}
 
 export const BUDGETS = [
   { value: "any", label: "Любой" },
