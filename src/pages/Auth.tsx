@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useStore } from "@/store";
 import { RhinoLogo } from "@/components/RhinoLogo";
-import { COUNTRIES, GRADES, examFor, convertScore } from "@/data/reference";
+import { COUNTRIES, GRADES, examFor } from "@/data/reference";
 import { toast } from "sonner";
 import { ChevronDown } from "lucide-react";
 
