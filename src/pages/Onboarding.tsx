@@ -315,6 +315,13 @@ export default function Onboarding() {
                     </li>
                   ))}
                 </ul>
+                <button
+                  type="button"
+                  onClick={() => { setAnswers({}); setQIdx(0); setStep(3); }}
+                  className="mt-4 w-full rounded-lg border border-border bg-bg2 px-3 py-2 text-xs hover:bg-bg3"
+                >
+                  Перезапустить тест
+                </button>
               </div>
             </div>
             <div className="sw-card">
