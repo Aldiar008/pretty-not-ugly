@@ -181,10 +181,18 @@ export default function Onboarding() {
               <p className="mt-2 text-text2">Чем точнее данные — тем точнее расчёт шансов.</p>
             </div>
             <div className="sw-card space-y-4">
-              <Field label={`${exam.name} — баллы`}>
+              <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-bg2 px-3 py-2">
+                <div className="text-xs text-text2">
+                  Ещё не сдавал(а) экзамены? Укажи <strong>ожидаемые</strong> результаты — пересчитаем шансы.
+                </div>
+                <label className="flex items-center gap-2 text-xs">
+                  <input type="checkbox" checked={expected} onChange={(e) => setExpected(e.target.checked)} />
+                  Ожидаемые
+                </label>
+              </div>
+              <Field label={`${exam.name} — ${expected ? "ожидаемые" : "фактические"} баллы`}>
                 <input type="number" className="sw-input" value={nationalScore} onChange={(e) => setNationalScore(e.target.value)} placeholder={`до ${exam.max}`} />
                 <div className="mt-1 text-xs text-text3">{exam.hint}</div>
-                {conv.gpa && <div className="mt-1 text-xs text-text2 tabular">≈ GPA {conv.gpa} / SAT {conv.sat} / {conv.pct}%</div>}
               </Field>
               <div className="grid grid-cols-2 gap-3">
                 <Field label="GPA (0–4.0)"><input className="sw-input" value={gpa} onChange={(e) => setGpa(e.target.value)} placeholder="3.7" /><Hint text="Медиана топ-50: 3.8" /></Field>
@@ -192,7 +200,7 @@ export default function Onboarding() {
                 <Field label="IELTS (0–9.0)"><input className="sw-input" value={ielts} onChange={(e) => setIelts(e.target.value)} placeholder="7.0" /><Hint text="Минимум для топа: 7.0" /></Field>
                 <Field label="TOEFL (0–120)"><input className="sw-input" value={toefl} onChange={(e) => setToefl(e.target.value)} placeholder="100" /><Hint text="Минимум для топа: 100" /></Field>
               </div>
-              <LevelMeter score={parseFloat(gpa) || conv.gpa || 0} />
+              <LevelMeter score={parseFloat(gpa) || 0} />
             </div>
           </div>
         )}
