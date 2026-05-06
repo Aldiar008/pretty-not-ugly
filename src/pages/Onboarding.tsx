@@ -67,8 +67,8 @@ export default function Onboarding() {
     }
     if (step === 1) {
       updateUser({
-        gpa: gpa ? parseFloat(gpa) : conv.gpa,
-        sat: sat ? parseInt(sat) : conv.sat,
+        gpa: gpa ? parseFloat(gpa) : null,
+        sat: sat ? parseInt(sat) : null,
         ielts: ielts ? parseFloat(ielts) : null,
         toefl: toefl ? parseInt(toefl) : null,
         nationalExam: exam.name,
