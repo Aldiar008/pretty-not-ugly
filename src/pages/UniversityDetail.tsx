@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useStore } from "@/store";
 import { UNIVERSITIES, calculateChance, countryName } from "@/data/reference";
