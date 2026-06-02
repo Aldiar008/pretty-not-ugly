@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound";
 import Missions from "./pages/Missions";
 import Achievements from "./pages/Achievements";
 import EssayStudio from "./pages/EssayStudio";
+import UniversityDetail from "./pages/UniversityDetail";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/plan" element={<Plan />} />
             <Route path="/universities" element={<Universities />} />
+            <Route path="/universities/:id" element={<UniversityDetail />} />
             <Route path="/documents" element={<Documents />} />
             <Route path="/ai" element={<AIAdvisor />} />
             <Route path="/interview" element={<Interview />} />
