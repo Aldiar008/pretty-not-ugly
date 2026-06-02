@@ -135,13 +135,18 @@ export default function Universities() {
                       </div>
                       <ChanceBadge percent={r.chancePercent} tier={r.tier} />
                     </div>
-                    <button
-                      onClick={() => setAdding(r)}
-                      disabled={isAdded(r)}
-                      className="mt-3 w-full rounded-md border border-border bg-bg2 px-3 py-1.5 text-xs hover:bg-bg3 disabled:opacity-50"
-                    >
-                      {isAdded(r) ? "Уже в списке" : "Добавить"}
-                    </button>
+                    <div className="mt-3 flex gap-2">
+                      <Link to={`/universities/${r.id}`} className="flex-1 rounded-md border border-border bg-bg2 px-3 py-1.5 text-xs text-center hover:bg-bg3">
+                        Профиль
+                      </Link>
+                      <button
+                        onClick={() => setAdding(r)}
+                        disabled={isAdded(r)}
+                        className="flex-1 rounded-md border border-border bg-bg2 px-3 py-1.5 text-xs hover:bg-bg3 disabled:opacity-50"
+                      >
+                        {isAdded(r) ? "В списке" : "Добавить"}
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
