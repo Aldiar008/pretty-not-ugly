@@ -62,7 +62,7 @@ export function RhinoCharacter({
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center align-middle rounded-full overflow-hidden bg-[hsl(var(--accent)/0.12)] ring-2 ring-[hsl(var(--accent)/0.35)]",
+        "inline-flex items-center justify-center align-middle",
         animClass,
         className,
       )}
@@ -76,7 +76,7 @@ export function RhinoCharacter({
         height={size}
         draggable={false}
         loading="lazy"
-        className="h-[115%] w-[115%] select-none object-cover object-center"
+        className="h-full w-full select-none object-contain drop-shadow-[0_8px_20px_hsl(var(--accent)/0.35)]"
       />
     </span>
   );
