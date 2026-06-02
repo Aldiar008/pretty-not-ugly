@@ -6,8 +6,9 @@ import {
 import type { UniversityRecord } from "@/data/reference";
 import type { UniversityApplication, UniversityStatus } from "@/types";
 import {
-  Search, Plus, ExternalLink, GraduationCap, DollarSign, Award, X, Trash2,
+  Search, Plus, ExternalLink, GraduationCap, DollarSign, Award, X, Trash2, Eye,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { removeWithUndo } from "@/lib/undo";
 import {
