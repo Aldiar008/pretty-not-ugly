@@ -39,6 +39,8 @@ export default function UniversityDetail() {
   const addUniversityTasks = useStore((s) => s.addUniversityTasks);
 
   const uni = useMemo(() => UNIVERSITIES.find((u) => u.id === id), [id]);
+  const [tab, setTab] = useState<"adm" | "ac" | "co" | "st">("adm");
+  const [logoBroken, setLogoBroken] = useState(false);
 
   if (!uni) {
     return (
