@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useStore } from "@/store";
 import { UNIVERSITIES, calculateChance, countryName } from "@/data/reference";
@@ -39,6 +39,8 @@ export default function UniversityDetail() {
   const addUniversityTasks = useStore((s) => s.addUniversityTasks);
 
   const uni = useMemo(() => UNIVERSITIES.find((u) => u.id === id), [id]);
+  const [tab, setTab] = useState<"adm" | "ac" | "co" | "st">("adm");
+  const [logoBroken, setLogoBroken] = useState(false);
 
   if (!uni) {
     return (
@@ -131,8 +133,17 @@ export default function UniversityDetail() {
       {/* Header */}
       <div className="sw-card">
         <div className="flex flex-wrap items-start gap-4">
-          <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-xl bg-bg2 text-3xl font-bold text-text2 ring-1 ring-border">
-            {uni.name.split(" ").map((w) => w[0]).slice(0, 3).join("")}
+          <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-bg2 text-2xl font-bold text-text2 ring-1 ring-border">
+            {!logoBroken ? (
+              <img
+                src={`https://www.google.com/s2/favicons?domain=${new URL(uni.website).hostname}&sz=128`}
+                alt={`${uni.name} logo`}
+                className="h-12 w-12 object-contain"
+                onError={() => setLogoBroken(true)}
+              />
+            ) : (
+              <span>{uni.name.split(" ").map((w) => w[0]).slice(0, 3).join("")}</span>
+            )}
           </div>
           <div className="min-w-0 flex-1">
             <h1 className="text-2xl font-semibold tracking-tight">{uni.name}</h1>
@@ -189,64 +200,79 @@ export default function UniversityDetail() {
 
         {/* Tabs */}
         <section className="sw-card">
-          <div className="mb-4 flex gap-5 border-b border-border text-sm">
-            {[
+          <div className="mb-4 flex flex-wrap gap-1 border-b border-border text-sm">
+            {([
               { id: "adm", label: "Admissions" },
               { id: "ac", label: "Academics" },
               { id: "co", label: "Costs" },
               { id: "st", label: "Students" },
-            ].map((t, i) => (
-              <a key={t.id} href={`#${t.id}`}
-                className="border-b-2 border-transparent pb-2 text-text2 hover:text-foreground hover:border-accent">
+            ] as const).map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={`-mb-px border-b-2 px-3 pb-2 pt-1 transition-colors ${
+                  tab === t.id
+                    ? "border-accent text-foreground font-medium"
+                    : "border-transparent text-text2 hover:text-foreground"
+                }`}
+              >
                 {t.label}
-              </a>
+              </button>
             ))}
           </div>
 
-          <div id="adm" className="space-y-4">
-            <h3 className="text-sm font-semibold">GPA & Admissions</h3>
-            <Row label="Average GPA (50th Percentile)" value={uni.minGpa.toFixed(1)} />
-            <BarRow label="Acceptance Rate" value={acceptance} suffix="%" color="bg-accent" />
-            <BarRow label="Yield Rate" value={yieldRate} suffix="%" color="bg-accent/70" />
-            <BarRow label="SAT Submission Rate" value={satSub} suffix="%" color="bg-accent" />
-            <BarRow label="ACT Submission Rate" value={actSub} suffix="%" color="bg-accent" />
-            <Row label="Test Scores Policy" value={uni.minSat > 1400 ? "Required" : "Considered"} />
-          </div>
-
-          <div id="ac" className="mt-6 space-y-4 border-t border-border pt-5">
-            <h3 className="text-sm font-semibold">Academics</h3>
-            <Row label="Student/Faculty Ratio" value={`${ratio}:1`} />
-            <Row label="Enrollment" value={enrollment.toLocaleString()} />
-            <BarRow label="Graduation Rate" value={gradRate} suffix="%" color="bg-warning" />
-            <BarRow label="Freshman Retention" value={retention} suffix="%" color="bg-success" />
-            <div>
-              <div className="mb-2 text-xs text-text3">Popular Majors</div>
-              <ul className="space-y-1.5 text-sm">
-                {["Computer Science", "Business", "Engineering", "Biology", "Psychology"].map((m, i) => (
-                  <li key={m} className="flex justify-between">
-                    <span>{m}</span>
-                    <span className="tabular text-text2">{(rand(seed + m, 5, 18) - i * 0.5).toFixed(2)}%</span>
-                  </li>
-                ))}
-              </ul>
+          {tab === "adm" && (
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold">GPA & Admissions</h3>
+              <Row label="Average GPA (50th Percentile)" value={uni.minGpa.toFixed(1)} />
+              <BarRow label="Acceptance Rate" value={acceptance} suffix="%" color="bg-accent" />
+              <BarRow label="Yield Rate" value={yieldRate} suffix="%" color="bg-accent/70" />
+              <BarRow label="SAT Submission Rate" value={satSub} suffix="%" color="bg-accent" />
+              <BarRow label="ACT Submission Rate" value={actSub} suffix="%" color="bg-accent" />
+              <Row label="Test Scores Policy" value={uni.minSat > 1400 ? "Required" : "Considered"} />
             </div>
-          </div>
+          )}
 
-          <div id="co" className="mt-6 space-y-3 border-t border-border pt-5">
-            <h3 className="text-sm font-semibold">Tuition & Fees</h3>
-            <Row label="Average Net Price" value={`$${netPrice.toLocaleString()}`} />
-            <Row label="Tuition" value={tuition === 0 ? "Бесплатно" : `$${tuition.toLocaleString()}`} />
-            <Row label="Room & Board" value={`$${room.toLocaleString()}`} />
-            <Row label="Application Fee" value={uni.country === "DE" || uni.country === "NO" ? "$0" : `$${rand(seed + "app", 50, 90)}`} />
-            <BarRow label="Financial Aid Rate" value={aid} suffix="%" color="bg-success" />
-          </div>
+          {tab === "ac" && (
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold">Academics</h3>
+              <Row label="Student/Faculty Ratio" value={`${ratio}:1`} />
+              <Row label="Enrollment" value={enrollment.toLocaleString()} />
+              <BarRow label="Graduation Rate" value={gradRate} suffix="%" color="bg-warning" />
+              <BarRow label="Freshman Retention" value={retention} suffix="%" color="bg-success" />
+              <div>
+                <div className="mb-2 text-xs text-text3">Popular Majors</div>
+                <ul className="space-y-1.5 text-sm">
+                  {["Computer Science", "Business", "Engineering", "Biology", "Psychology"].map((m, i) => (
+                    <li key={m} className="flex justify-between">
+                      <span>{m}</span>
+                      <span className="tabular text-text2">{(rand(seed + m, 5, 18) - i * 0.5).toFixed(2)}%</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
 
-          <div id="st" className="mt-6 space-y-3 border-t border-border pt-5">
-            <h3 className="text-sm font-semibold">Demographics</h3>
-            <BarRow label="Male" value={male} suffix="%" color="bg-accent" />
-            <BarRow label="Female" value={female} suffix="%" color="bg-pink-500" />
-            <BarRow label="International Students" value={intl} suffix="%" color="bg-purple" />
-          </div>
+          {tab === "co" && (
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold">Tuition & Fees</h3>
+              <Row label="Average Net Price" value={`$${netPrice.toLocaleString()}`} />
+              <Row label="Tuition" value={tuition === 0 ? "Бесплатно" : `$${tuition.toLocaleString()}`} />
+              <Row label="Room & Board" value={`$${room.toLocaleString()}`} />
+              <Row label="Application Fee" value={uni.country === "DE" || uni.country === "NO" ? "$0" : `$${rand(seed + "app", 50, 90)}`} />
+              <BarRow label="Financial Aid Rate" value={aid} suffix="%" color="bg-success" />
+            </div>
+          )}
+
+          {tab === "st" && (
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold">Demographics</h3>
+              <BarRow label="Male" value={male} suffix="%" color="bg-accent" />
+              <BarRow label="Female" value={female} suffix="%" color="bg-pink-500" />
+              <BarRow label="International Students" value={intl} suffix="%" color="bg-purple" />
+            </div>
+          )}
         </section>
       </div>
 

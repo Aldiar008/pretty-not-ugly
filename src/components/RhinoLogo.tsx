@@ -26,7 +26,7 @@ export function RhinoLogo({ size = 28, className, static: isStatic = false }: Rh
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center align-middle overflow-hidden rounded-full bg-[hsl(var(--accent)/0.12)] ring-1 ring-[hsl(var(--accent)/0.35)]",
+        "inline-flex items-center justify-center align-middle",
         animate && "sw-mascot-bob",
         className,
       )}
@@ -40,7 +40,7 @@ export function RhinoLogo({ size = 28, className, static: isStatic = false }: Rh
         height={size}
         draggable={false}
         loading="lazy"
-        className="h-[120%] w-[120%] select-none object-cover object-center"
+        className="h-full w-full select-none object-contain"
       />
     </span>
   );
