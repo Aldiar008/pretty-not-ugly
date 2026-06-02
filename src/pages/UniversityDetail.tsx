@@ -133,8 +133,17 @@ export default function UniversityDetail() {
       {/* Header */}
       <div className="sw-card">
         <div className="flex flex-wrap items-start gap-4">
-          <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-xl bg-bg2 text-3xl font-bold text-text2 ring-1 ring-border">
-            {uni.name.split(" ").map((w) => w[0]).slice(0, 3).join("")}
+          <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-bg2 text-2xl font-bold text-text2 ring-1 ring-border">
+            {!logoBroken ? (
+              <img
+                src={`https://www.google.com/s2/favicons?domain=${new URL(uni.website).hostname}&sz=128`}
+                alt={`${uni.name} logo`}
+                className="h-12 w-12 object-contain"
+                onError={() => setLogoBroken(true)}
+              />
+            ) : (
+              <span>{uni.name.split(" ").map((w) => w[0]).slice(0, 3).join("")}</span>
+            )}
           </div>
           <div className="min-w-0 flex-1">
             <h1 className="text-2xl font-semibold tracking-tight">{uni.name}</h1>
