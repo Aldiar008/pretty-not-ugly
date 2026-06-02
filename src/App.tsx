@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound";
 import Missions from "./pages/Missions";
 import Achievements from "./pages/Achievements";
 import EssayStudio from "./pages/EssayStudio";
+import UniversityDetail from "./pages/UniversityDetail";
 
 const queryClient = new QueryClient();
 
