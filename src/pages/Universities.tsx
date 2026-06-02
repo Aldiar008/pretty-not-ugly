@@ -269,12 +269,18 @@ function BrowseCard({ uni, added, onAdd }: { uni: UniversityRecord & { chancePer
         </div>
       </div>
       <div className="mt-3 flex items-center gap-2">
+        <Link
+          to={`/universities/${uni.id}`}
+          className="flex-1 rounded-md border border-border bg-bg2 px-3 py-1.5 text-xs text-center hover:bg-bg3 inline-flex items-center justify-center gap-1"
+        >
+          <Eye className="h-3 w-3" /> Подробнее
+        </Link>
         <button
           onClick={onAdd}
           disabled={added}
-          className="flex-1 rounded-md border border-border bg-bg2 px-3 py-1.5 text-xs hover:bg-bg3 disabled:opacity-50"
+          className="rounded-md border border-border bg-bg2 px-3 py-1.5 text-xs hover:bg-bg3 disabled:opacity-50"
         >
-          {added ? "В списке ✓" : "+ В список"}
+          {added ? "✓" : "+"}
         </button>
         <a
           href={uni.website}
