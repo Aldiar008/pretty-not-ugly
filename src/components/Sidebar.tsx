@@ -14,6 +14,7 @@ import {
   Trophy,
   Flame,
   PenLine,
+  Map as MapIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { RhinoLogo } from "./RhinoLogo";
@@ -40,6 +41,7 @@ export function Sidebar() {
     { to: "/interview", label: t("nav.interview"), icon: Mic },
     { to: "/missions", label: t("nav.missions"), icon: Zap },
     { to: "/achievements", label: t("nav.achievements"), icon: Trophy },
+    { to: "/roadmap", label: t("nav.roadmap"), icon: MapIcon },
     { to: "/profile", label: t("nav.profile"), icon: UserIcon },
   ];
 
