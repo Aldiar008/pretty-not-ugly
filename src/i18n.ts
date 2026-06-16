@@ -13,6 +13,7 @@ const ru = {
     missions: "Миссии",
     achievements: "Достижения",
     profile: "Профиль",
+    roadmap: "Roadmap",
   },
   common: {
     streak_days: "{{count}} дн.",
@@ -49,6 +50,7 @@ const en = {
     missions: "Missions",
     achievements: "Achievements",
     profile: "Profile",
+    roadmap: "Roadmap",
   },
   common: {
     streak_days: "{{count}} d",

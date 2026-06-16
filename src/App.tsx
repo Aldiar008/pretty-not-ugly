@@ -23,6 +23,7 @@ import Missions from "./pages/Missions";
 import Achievements from "./pages/Achievements";
 import EssayStudio from "./pages/EssayStudio";
 import UniversityDetail from "./pages/UniversityDetail";
+import Roadmap from "./pages/Roadmap";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,7 @@ const App = () => (
             <Route path="/missions" element={<Missions />} />
             <Route path="/achievements" element={<Achievements />} />
             <Route path="/essay" element={<EssayStudio />} />
+            <Route path="/roadmap" element={<Roadmap />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
