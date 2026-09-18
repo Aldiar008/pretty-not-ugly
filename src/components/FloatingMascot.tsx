@@ -60,7 +60,7 @@ export function FloatingMascot() {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       {open && (
-        <div className="w-[320px] rounded-2xl border border-border bg-bg2 p-4 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.18)] animate-fade-in">
+        <div className="w-[320px] rounded-lg border border-border bg-bg2 p-4 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.18)] animate-fade-in">
           <div className="mb-2 flex items-start justify-between gap-2">
             <div className="flex items-center gap-2">
               <RhinoLogo size={20} />

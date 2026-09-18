@@ -187,7 +187,7 @@ export default function Roadmap() {
           return (
             <section
               key={col}
-              className="flex flex-col gap-3 rounded-2xl border border-border bg-[hsl(var(--bg-2))] p-4"
+              className="flex flex-col gap-3 rounded-lg border border-border bg-[hsl(var(--bg-2))] p-4"
             >
               <header className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -247,7 +247,7 @@ export default function Roadmap() {
         })}
       </div>
 
-      <footer className="mt-10 rounded-2xl border border-dashed border-border bg-[hsl(var(--bg-2))] p-6 text-center">
+      <footer className="mt-10 rounded-lg border border-dashed border-border bg-[hsl(var(--bg-2))] p-6 text-center">
         <h3 className="text-base font-semibold">Не нашёл свою идею?</h3>
         <p className="mt-1 text-sm text-[hsl(var(--text-2))]">
           Напиши Бэгги в AI-советнике — мы добавим её в раздел «Идея» и вынесем на голосование.
