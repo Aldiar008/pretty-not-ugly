@@ -2,39 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Stepwise v3.0 design system — palette stone, radius 16px, dyшащие отступы. */
+/* Stepwise v4.0 design system — collegiate palette (evergreen + brass), radius 12px. */
 
 @layer base {
   :root {
-    /* Surfaces (stone) */
-    --background: 0 0% 100%;          /* #ffffff */
-    --bg-2: 60 9% 98%;                /* #fafaf9 */
-    --bg-3: 60 5% 96%;                /* #f5f5f4 */
-    --bg-elevated: 0 0% 100%;
+    /* Surfaces (warm paper) */
+    --background: 45 30% 97%;         /* #f8f6f0 */
+    --bg-2: 42 26% 94%;               /* #f1ede2 */
+    --bg-3: 40 20% 90%;               /* #e7e0d0 */
+    --bg-elevated: 45 30% 97%;
 
     /* Text */
-    --foreground: 24 10% 10%;         /* #1c1917 */
-    --text-2: 25 5% 45%;              /* #78716c */
-    --text-3: 24 6% 64%;              /* #a8a29e */
+    --foreground: 155 22% 12%;        /* #17251f */
+    --text-2: 145 8% 38%;             /* #59635c */
+    --text-3: 140 6% 55%;             /* #87928b */
 
     /* Border */
-    --border: 20 6% 90%;              /* #e7e5e4 */
-    --border-subtle: 30 11% 93%;
+    --border: 40 18% 85%;             /* #ddd4c1 */
+    --border-subtle: 42 22% 91%;
 
-    /* Brand */
-    --accent: 221 83% 53%;            /* #2563eb */
-    --accent-hover: 224 76% 48%;      /* #1d4ed8 */
-    --accent-subtle: 214 100% 96%;    /* #eff6ff */
-    --accent-foreground: 0 0% 100%;
+    /* Brand: deep evergreen primary, brass secondary */
+    --accent: 158 48% 22%;            /* #1a5541 */
+    --accent-hover: 158 55% 16%;      /* #10382b */
+    --accent-subtle: 150 32% 92%;     /* #e5ede8 */
+    --accent-foreground: 45 30% 97%;
+
+    --gold: 36 55% 46%;               /* #b8863a */
+    --gold-subtle: 40 48% 92%;        /* #f0e6d3 */
 
     /* Semantic */
-    --success: 142 71% 36%;
-    --success-subtle: 138 76% 96%;
-    --warning: 30 92% 44%;
-    --warning-subtle: 48 100% 96%;
-    --danger: 0 73% 51%;
-    --danger-subtle: 0 86% 97%;
-    --purple: 258 90% 66%;
+    --success: 152 42% 30%;
+    --success-subtle: 150 35% 93%;
+    --warning: 32 78% 42%;
+    --warning-subtle: 42 70% 93%;
+    --danger: 9 55% 42%;              /* clay red */
+    --danger-subtle: 9 45% 94%;
+    --purple: 268 30% 46%;
+
+    /* Sidebar: fixed ink rail, independent of app theme */
+    --sidebar-bg: 155 26% 9%;         /* #0e1b15 */
+    --sidebar-fg: 45 25% 93%;         /* #f0ece0 */
+    --sidebar-fg-muted: 150 10% 62%;
+    --sidebar-active-bg: 155 20% 15%;
+    --sidebar-border: 155 16% 17%;
+    --sidebar-accent: 36 60% 55%;     /* brass highlight for active/streak */
 
     /* shadcn aliases */
     --card: var(--bg-elevated);
@@ -48,37 +59,48 @@
     --muted: var(--bg-3);
     --muted-foreground: var(--text-2);
     --destructive: var(--danger);
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 45 30% 97%;
     --input: var(--border);
     --ring: var(--accent);
 
-    --radius: 1rem; /* 16px */
+    --radius: 0.75rem; /* 12px */
   }
 
   .dark {
-    --background: 24 10% 5%;          /* #0c0a09 */
-    --bg-2: 24 10% 10%;               /* #1c1917 */
-    --bg-3: 24 6% 15%;                /* #292524 */
-    --bg-elevated: 24 10% 10%;
+    --background: 155 22% 6%;         /* #0a1310 */
+    --bg-2: 155 18% 9%;               /* #101d18 */
+    --bg-3: 150 14% 13%;              /* #1a2620 */
+    --bg-elevated: 155 18% 9%;
 
-    --foreground: 60 9% 98%;          /* #fafaf9 */
-    --text-2: 24 6% 64%;              /* #a8a29e */
-    --text-3: 25 5% 45%;              /* #78716c */
+    --foreground: 45 22% 93%;         /* #efeadf */
+    --text-2: 150 8% 65%;
+    --text-3: 150 6% 46%;
 
-    --border: 24 5% 26%;              /* #44403c */
-    --border-subtle: 24 6% 15%;
+    --border: 150 12% 19%;
+    --border-subtle: 150 14% 13%;
 
-    --accent: 217 91% 60%;            /* #3b82f6 */
-    --accent-hover: 221 83% 53%;
-    --accent-subtle: 217 50% 25%;
+    --accent: 152 42% 46%;            /* #3d8f68 */
+    --accent-hover: 152 48% 38%;
+    --accent-subtle: 152 25% 16%;
+    --accent-foreground: 155 26% 8%;
 
-    --success: 142 71% 45%;
-    --success-subtle: 142 70% 12%;
-    --warning: 38 92% 50%;
-    --warning-subtle: 30 80% 14%;
-    --danger: 0 84% 60%;
-    --danger-subtle: 0 70% 14%;
-    --purple: 258 90% 66%;
+    --gold: 38 62% 56%;
+    --gold-subtle: 38 30% 16%;
+
+    --success: 152 40% 48%;
+    --success-subtle: 152 30% 14%;
+    --warning: 38 85% 55%;
+    --warning-subtle: 38 55% 14%;
+    --danger: 9 62% 56%;
+    --danger-subtle: 9 40% 15%;
+    --purple: 268 35% 62%;
+
+    --sidebar-bg: 155 30% 5%;
+    --sidebar-fg: 45 22% 93%;
+    --sidebar-fg-muted: 150 10% 58%;
+    --sidebar-active-bg: 155 22% 11%;
+    --sidebar-border: 155 18% 13%;
+    --sidebar-accent: 38 62% 56%;
 
     --card: var(--bg-elevated);
     --popover: var(--bg-2);
@@ -98,16 +120,19 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
   }
 
-  h1 { font-size: 48px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
-  h2 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
-  h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
+  h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  h2 { font-size: 28px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.2; }
+  h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
+
+  /* Reserved for editorial/marketing moments — not the app shell. */
+  .font-display { font-family: "Fraunces", ui-serif, Georgia, serif; font-feature-settings: "ss01"; }
 
   .num, .tabular { font-variant-numeric: tabular-nums; }
 
@@ -118,13 +143,13 @@
 
 @layer components {
   .sw-card {
-    @apply rounded-2xl border bg-[hsl(var(--bg-elevated))] p-6 transition-shadow;
+    @apply rounded-lg border bg-[hsl(var(--bg-elevated))] p-6 transition-colors;
   }
   .sw-card:hover {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    @apply border-[hsl(var(--text-3))];
   }
   .sw-card-bare {
-    @apply rounded-2xl border bg-[hsl(var(--bg-elevated))];
+    @apply rounded-lg border bg-[hsl(var(--bg-elevated))];
   }
   .sw-input {
     @apply w-full rounded-[10px] border border-border bg-background px-4 py-3 text-[15px]

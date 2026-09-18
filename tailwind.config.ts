@@ -12,7 +12,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['"Public Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -24,6 +25,15 @@ export default {
         bg3: "hsl(var(--bg-3))",
         text2: "hsl(var(--text-2))",
         text3: "hsl(var(--text-3))",
+        gold: "hsl(var(--gold))",
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-bg))",
+          fg: "hsl(var(--sidebar-fg))",
+          muted: "hsl(var(--sidebar-fg-muted))",
+          active: "hsl(var(--sidebar-active-bg))",
+          border: "hsl(var(--sidebar-border))",
+          accent: "hsl(var(--sidebar-accent))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
